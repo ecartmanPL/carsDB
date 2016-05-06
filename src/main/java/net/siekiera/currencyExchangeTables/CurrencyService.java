@@ -124,9 +124,6 @@ public class CurrencyService {
     }
 
     public void test() {
-
-
-
-        //getAndParseData();
+        log.info("Wywołano metodę CurrencyService:test()");
     }
 }

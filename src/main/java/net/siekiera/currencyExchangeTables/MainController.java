@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import net.siekiera.mgc.models.Testowa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,13 @@ public class MainController {
     @RequestMapping("/test")
     public String testowaMetoda(@RequestParam(value = "name", required = false, defaultValue = "AAA Test") String name, Model model) {
         currencyService.test();
+        model.addAttribute("auto", Testowa.zwrocAuto());
         return "greeting";
+    }
+    @RequestMapping("/listall")
+    public String listAll(Model model) {
+        model.addAttribute("samochody", Testowa.zwrocAuto());
+        return "listall";
     }
 
     @RequestMapping("/table")

@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="currencyExchangeTables" />
+        <module name="mgc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="currencyExchangeTables" target="1.8" />
+      <module name="mgc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
