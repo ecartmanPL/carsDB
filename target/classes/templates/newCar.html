@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <div th:replace="/fragments/head"></div>
+</head>
+<body>
+<div th:replace="/fragments/navbar"></div>
+<h1>Dodawanie samochodu</h1>
+<form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post">
+    <p>Model: <input type="text" th:field="*{model}"/></p>
+    <p>Przebieg: <input type="text" th:field="*{przebieg}"/></p>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+</form>
+<div th:replace="/fragments/scripts"></div>
+</body>
+</html>

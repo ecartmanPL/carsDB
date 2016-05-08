@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Insert title here</title>
+    <div th:replace="/fragments/head"></div>
 </head>
 <body>
-<h1>Tabela kursów</h1>
-<table>
-    <tr>
-        <th>Numer tabeli:</th>
-        <td>
-            <div th:text="${currencyTable.tableNumber}"></div>
-        </td>
-    </tr>
-    <tr>
-        <th>Data publikacji:</th>
-        <td>
-            <div th:text="${currencyTable.publicationDate}"></div>
-        </td>
-    </tr>
-</table>
-<p>
-    <b> </b>
-    <b> </b>
-</p>
-
-<table>
-    <thead>
-    <tr>
-        <th>Nazwa waluty</th>
-        <th>Kod waluty</th>
-        <th>Kurs kupna</th>
-        <th>Kurs sprzedaży</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="pozycja: ${currencyTable.currencyList}">
-        <td th:text="${pozycja.currencyName}"></td>
-        <td th:text="${pozycja.currencyCode}"></td>
-        <td th:text="${pozycja.buyCourse}"></td>
-        <td th:text="${pozycja.sellCourse}"></td>
-    </tr>
-    </tbody>
-</table>
+<div th:replace="/fragments/navbar"></div>
+<div class="container">
+    <div class="main">
+        <h1>Tabela kursów</h1>
+        <table>
+            <tr>
+                <th>Numer tabeli:</th>
+                <td>
+                    <div th:text="${currencyTable.tableNumber}"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>Data publikacji:</th>
+                <td>
+                    <div th:text="${currencyTable.publicationDate}"></div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <thead>
+            <tr>
+                <th>Nazwa waluty</th>
+                <th>Kod waluty</th>
+                <th>Kurs kupna</th>
+                <th>Kurs sprzedaży</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pozycja: ${currencyTable.currencyList}">
+                <td th:text="${pozycja.currencyName}"></td>
+                <td th:text="${pozycja.currencyCode}"></td>
+                <td th:text="${pozycja.buyCourse}"></td>
+                <td th:text="${pozycja.sellCourse}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="/fragments/scripts"></div>
 </body>
 </html>

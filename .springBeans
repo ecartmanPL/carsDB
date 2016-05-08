@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:net.siekiera.currencyExchangeTables.CurrencyExchangeTablesApplication</config>
+		<config>java:net.siekiera.mgc.CurrencyExchangeTablesApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
