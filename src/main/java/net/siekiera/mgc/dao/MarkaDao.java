@@ -1,6 +1,5 @@
 package net.siekiera.mgc.dao;
 
-import net.siekiera.mgc.model.ElementWyposazenia;
 import net.siekiera.mgc.model.Marka;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;

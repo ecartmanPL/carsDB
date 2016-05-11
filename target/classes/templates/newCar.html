@@ -5,12 +5,25 @@
 </head>
 <body>
 <div th:replace="/fragments/navbar"></div>
-<h1>Dodawanie samochodu</h1>
-<form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post">
-    <p>Model: <input type="text" th:field="*{model}"/></p>
-    <p>Przebieg: <input type="text" th:field="*{przebieg}"/></p>
-    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
-</form>
-<div th:replace="/fragments/scripts"></div>
+<div class="container">
+    <div class="main">
+        <h1>Dodawanie samochodu</h1>
+        <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post">
+            <div>Marka: <select th:field="*{marka}">
+                <option th:each="marka : ${allMarka}" th:value="${marka.id}" th:text="${marka.nazwa}">Marka</option>
+            </select></div>
+            <div>Model: <input type="text" th:field="*{model}"/></div>
+            <div>Rok produkcji: <input type="text" th:field="*{rokProdukcji}"/></div>
+            <div>Pojemność skokowa: <input type="text" th:field="*{pojemnoscSkokowa}"/></div>
+            <div>Przebieg: <input type="text" th:field="*{przebieg}"/></div>
+            <div>Moc: <input type="text" th:field="*{moc}"/></div>
+            <div th:each="elWyposazenia : ${allWyposazenie}">
+                <input type="checkbox" th:field="*{listaWyposazenia}" th:value="${elWyposazenia.id}" th:text="${elWyposazenia.nazwa}"/>
+            </div>
+            <div><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></div>
+        </form>
+        <div th:replace="/fragments/scripts"></div>
+    </div>
+</div>
 </body>
 </html>

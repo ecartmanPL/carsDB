@@ -7,14 +7,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#">MGC Centrum Samochodowe</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Wszystkie samochody</a></li>
-                <li><a href="/dodaj">Dodaj samochód</a></li>
-                <li><a href="/table">Kursy walut</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a href="/">Wszystkie samochody</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/newcar' ? 'active':''}"><a href="/newcar">Dodaj samochód</a></li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/table' ? 'active':''}"><a href="/table">Kursy walut</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+
+

@@ -4,24 +4,17 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
- * Klasa przechowuje informacje o elemencie wyposażenia (np ABS, Elektryczne szyby)
+ * Klasa przechowuje informacje o elemencie wyposazenia samochodu
  */
 @Entity
-@Table(name = "elementy_wyposazenia")
+@Table(name = "wyposazenie")
 public class ElementWyposazenia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @NotNull
-    private String nazwa;
+    Integer id;
+    String nazwa;
 
     public ElementWyposazenia() {
-    }
-
-    public ElementWyposazenia(Integer id, String nazwa) {
-        this.id = id;
-        this.nazwa = nazwa;
     }
 
     public ElementWyposazenia(String nazwa) {
@@ -43,12 +36,5 @@ public class ElementWyposazenia {
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
-
-    @Override
-    public String toString() {
-        return "ElementWyposazenia{" +
-                "id=" + id +
-                ", nazwa='" + nazwa + '\'' +
-                '}';
-    }
+    
 }

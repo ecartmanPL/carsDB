@@ -1,9 +1,5 @@
 package net.siekiera.mgc;
 
-import net.siekiera.mgc.model.ElementWyposazenia;
-import net.siekiera.mgc.model.Marka;
-import net.siekiera.mgc.model.Samochod;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

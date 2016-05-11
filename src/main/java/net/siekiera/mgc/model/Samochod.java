@@ -1,8 +1,5 @@
 package net.siekiera.mgc.model;
 
-import org.hibernate.annotations.Target;
-import org.hibernate.validator.valuehandling.UnwrapValidatedValue;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,37 +20,56 @@ public class Samochod {
     private Integer pojemnoscSkokowa;
     private Integer przebieg;
     private Integer moc;
-    @ElementCollection(targetClass = ElementWyposazenia.class)
-    private List<ElementWyposazenia> wyposazenie = new ArrayList<ElementWyposazenia>();
     private Integer cena;
     private Boolean faktura;
     @ElementCollection(targetClass = Zdjecie.class)
     @OneToMany(cascade = CascadeType.ALL)
     private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
     private String opis;
-
+    @ElementCollection(targetClass = ElementWyposazenia.class)
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
 
     public Samochod() {
-
     }
 
-    public Samochod(int i, Samochod samochod) {
-    }
-
-    public Samochod(Marka marka, String model, Integer rokProdukcji, Integer pojemnoscSkokowa, Integer przebieg,
-                    Integer moc, List<ElementWyposazenia> wyposazenie, Integer cena, Boolean faktura,
-                    String opis) {
+    public Samochod(Integer id, Marka marka, String model, Integer rokProdukcji, Integer pojemnoscSkokowa, Integer przebieg, Integer moc, Integer cena, Boolean faktura, List<Zdjecie> zdjecia, String opis, List<ElementWyposazenia> listaWyposazenia) {
+        this.id = id;
         this.marka = marka;
         this.model = model;
         this.rokProdukcji = rokProdukcji;
         this.pojemnoscSkokowa = pojemnoscSkokowa;
         this.przebieg = przebieg;
         this.moc = moc;
-        this.wyposazenie = wyposazenie;
         this.cena = cena;
         this.faktura = faktura;
         this.zdjecia = zdjecia;
         this.opis = opis;
+        this.listaWyposazenia = listaWyposazenia;
+    }
+
+    public List<ElementWyposazenia> getListaWyposazenia() {
+        return listaWyposazenia;
+    }
+
+    public void setListaWyposazenia(List<ElementWyposazenia> listaWyposazenia) {
+        this.listaWyposazenia = listaWyposazenia;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Marka getMarka() {
+        return marka;
+    }
+
+    public void setMarka(Marka marka) {
+        this.marka = marka;
     }
 
     public String getModel() {
@@ -96,22 +112,6 @@ public class Samochod {
         this.moc = moc;
     }
 
-    public Marka getMarka() {
-        return marka;
-    }
-
-    public void setMarka(Marka marka) {
-        this.marka = marka;
-    }
-
-    public List<ElementWyposazenia> getWyposazenie() {
-        return wyposazenie;
-    }
-
-    public void setWyposazenie(List<ElementWyposazenia> wyposazenie) {
-        this.wyposazenie = wyposazenie;
-    }
-
     public Integer getCena() {
         return cena;
     }
@@ -144,20 +144,4 @@ public class Samochod {
         this.opis = opis;
     }
 
-    @Override
-    public String toString() {
-        return "Samochod{" +
-                "marka=" + marka +
-                ", model='" + model + '\'' +
-                ", rokProdukcji=" + rokProdukcji +
-                ", pojemnoscSkokowa=" + pojemnoscSkokowa +
-                ", przebieg=" + przebieg +
-                ", moc=" + moc +
-                ", wyposazenie=" + wyposazenie +
-                ", cena=" + cena +
-                ", faktura=" + faktura +
-                //              ", zdjecia=" + zdjecia +
-                ", opis='" + opis + '\'' +
-                '}';
-    }
 }
