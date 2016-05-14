@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <div th:replace="/fragments/head"></div>
+</head>
+<body>
+<div th:replace="/fragments/navbar"></div>
+<div class="container">
+    <div class="main">
+        <div th:if="${message}">
+            <h2 th:text="${message}"/>
+        </div>
+        <h1>Lista wszystkich samochodow</h1>
+
+        <ul>
+            <li th:each="samochod:${samochody}">
+                <div th:text="${samochod.marka.nazwa}">marka</div>
+            </li>
+        </ul>
+        <div th:replace="/fragments/scripts"></div>
+    </div>
+</div>
+</body>
+</html>

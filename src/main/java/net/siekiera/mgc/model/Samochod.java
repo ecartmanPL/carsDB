@@ -1,5 +1,7 @@
 package net.siekiera.mgc.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,8 @@ public class Samochod {
     @ElementCollection(targetClass = ElementWyposazenia.class)
     @OneToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
+    @Transient
+    private MultipartFile testPhoto;
 
     public Samochod() {
     }
@@ -46,6 +50,14 @@ public class Samochod {
         this.zdjecia = zdjecia;
         this.opis = opis;
         this.listaWyposazenia = listaWyposazenia;
+    }
+
+    public MultipartFile getTestPhoto() {
+        return testPhoto;
+    }
+
+    public void setTestPhoto(MultipartFile testPhoto) {
+        this.testPhoto = testPhoto;
     }
 
     public List<ElementWyposazenia> getListaWyposazenia() {
@@ -142,6 +154,10 @@ public class Samochod {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public void dodajZdjecie(Zdjecie zdjecie) {
+        this.zdjecia.add(zdjecie);
     }
 
 }
