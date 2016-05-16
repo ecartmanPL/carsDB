@@ -1,5 +1,6 @@
 package net.siekiera.mgc.controller;
 
+import net.siekiera.mgc.dao.CenyWalutDao;
 import net.siekiera.mgc.dao.MarkaDao;
 import net.siekiera.mgc.dao.SamochodDao;
 import net.siekiera.mgc.model.*;
@@ -19,6 +20,8 @@ import java.util.List;
 @Controller
 public class MainController {
     @Autowired
+    CenyWalutDao cenyWalutDao;
+    @Autowired
     CurrencyService currencyService;
     @Autowired
     PhotoUploadService photoUploadService;
@@ -32,6 +35,15 @@ public class MainController {
     @RequestMapping("/")
     public String homePage() {
         return "homePage";
+    }
+
+    @RequestMapping("/updatecurr")
+    public String updateCurr(Model model) {
+        CenyWalut cenyWalut = currencyService.getCenyWalut();
+        Double cena;
+        cena = 12500.0;
+        cena = cena * cenyWalut.getEur();
+        return "redirect:/";
     }
 
     @RequestMapping("/table")

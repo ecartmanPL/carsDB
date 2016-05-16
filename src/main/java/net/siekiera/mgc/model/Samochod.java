@@ -1,7 +1,5 @@
 package net.siekiera.mgc.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +16,14 @@ public class Samochod {
     @ManyToOne(cascade = CascadeType.ALL)
     private Marka marka;
     private String model;
+    private String tytul;
     private Integer rokProdukcji;
     private Integer pojemnoscSkokowa;
     private Integer przebieg;
     private Integer moc;
-    private Integer cena;
+    private Double cena;
+    private Integer cenaUsd;
+    private Integer cenaEur;
     private Boolean faktura;
     @ElementCollection(targetClass = Zdjecie.class)
     @OneToMany(cascade = CascadeType.ALL)
@@ -31,13 +32,11 @@ public class Samochod {
     @ElementCollection(targetClass = ElementWyposazenia.class)
     @OneToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
-    @Transient
-    private MultipartFile testPhoto;
 
     public Samochod() {
     }
 
-    public Samochod(Integer id, Marka marka, String model, Integer rokProdukcji, Integer pojemnoscSkokowa, Integer przebieg, Integer moc, Integer cena, Boolean faktura, List<Zdjecie> zdjecia, String opis, List<ElementWyposazenia> listaWyposazenia) {
+    public Samochod(Integer id, Marka marka, String model, Integer rokProdukcji, Integer pojemnoscSkokowa, Integer przebieg, Integer moc, Double cena, Boolean faktura, List<Zdjecie> zdjecia, String opis, List<ElementWyposazenia> listaWyposazenia) {
         this.id = id;
         this.marka = marka;
         this.model = model;
@@ -50,14 +49,6 @@ public class Samochod {
         this.zdjecia = zdjecia;
         this.opis = opis;
         this.listaWyposazenia = listaWyposazenia;
-    }
-
-    public MultipartFile getTestPhoto() {
-        return testPhoto;
-    }
-
-    public void setTestPhoto(MultipartFile testPhoto) {
-        this.testPhoto = testPhoto;
     }
 
     public List<ElementWyposazenia> getListaWyposazenia() {
@@ -124,11 +115,11 @@ public class Samochod {
         this.moc = moc;
     }
 
-    public Integer getCena() {
+    public Double getCena() {
         return cena;
     }
 
-    public void setCena(Integer cena) {
+    public void setCena(Double cena) {
         this.cena = cena;
     }
 
@@ -156,8 +147,31 @@ public class Samochod {
         this.opis = opis;
     }
 
+    public String getTytul() {
+        return tytul;
+    }
+
+    public void setTytul(String tytul) {
+        this.tytul = tytul;
+    }
+
     public void dodajZdjecie(Zdjecie zdjecie) {
         this.zdjecia.add(zdjecie);
     }
 
+    public Integer getCenaUsd() {
+        return cenaUsd;
+    }
+
+    public void setCenaUsd(Integer cenaUsd) {
+        this.cenaUsd = cenaUsd;
+    }
+
+    public Integer getCenaEur() {
+        return cenaEur;
+    }
+
+    public void setCenaEur(Integer cenaEur) {
+        this.cenaEur = cenaEur;
+    }
 }

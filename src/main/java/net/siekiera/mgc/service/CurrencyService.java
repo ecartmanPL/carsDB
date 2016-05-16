@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import net.siekiera.mgc.model.CenyWalut;
 import net.siekiera.mgc.model.Currency;
 import net.siekiera.mgc.model.CurrencyTable;
 import org.slf4j.Logger;
@@ -15,7 +16,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 
-
 import org.springframework.stereotype.Service;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,11 +23,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 @Service
 public class CurrencyService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     /**
      * Method provides comlete and latest currencyTable object
      *
      * @return
      */
+
     public CurrencyTable getLatestTable() {
         String buySellTableName = getLatestBuySellTableUrl();
         log.info("Znalazłem adres najnowszej tabeli: {}", getLatestBuySellTableUrl());
@@ -71,14 +73,30 @@ public class CurrencyService {
                 }
             }
         } catch (Exception e) {
-            log.error("Wystąpił błąd w metodzie getCurrencyList klasy CurrencyService.");
+            log.error("Wystąpił wyjątek w metodzie getCurrencyList klasy CurrencyService.");
         }
         return currencyList;
+    }
 
+    public CenyWalut getCenyWalut() {
+        CenyWalut cenyWalut = new CenyWalut();
+        cenyWalut.setDataNotowania(getLatestTableInfo("data_publikacji"));
+        cenyWalut.setNumerTabeli(getLatestTableInfo("numer_tabeli"));
+        List<Currency> currencyList = getCurrencyList();
+        for (Currency currency: currencyList) {
+            if (currency.getCurrencyCode().equals("USD")) {
+                cenyWalut.setUsd(currency.getSellCourse());
+            }
+            if (currency.getCurrencyCode().equals("EUR")) {
+                cenyWalut.setEur(currency.getSellCourse());
+            }
+        }
+        return cenyWalut;
     }
 
     /**
      * Method to provide table number (ex 068/C/NBP/2016) and publication date
+     *
      * @param info
      * @return
      */
@@ -92,8 +110,7 @@ public class CurrencyService {
             nList = document.getElementsByTagName(info);
             log.info("Znalazłem i zwracam tableInfo {} = {}", info, nList.item(0).getTextContent());
             return nList.item(0).getTextContent();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Wystąpił wyjątek przy pobieraniu danych (getLatestTableInfo)");
             return null;
         }
@@ -128,4 +145,5 @@ public class CurrencyService {
     public void test() {
         log.info("Wywołano metodę CurrencyService:test()");
     }
+
 }
