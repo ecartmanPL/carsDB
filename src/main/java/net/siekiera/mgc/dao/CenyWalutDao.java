@@ -1,6 +1,7 @@
 package net.siekiera.mgc.dao;
 
 import net.siekiera.mgc.model.CenyWalut;
+import net.siekiera.mgc.model.Currency;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,5 +12,6 @@ import java.util.List;
  */
 @Transactional
 public interface CenyWalutDao extends CrudRepository<CenyWalut, Integer> {
+    List<CenyWalut> findFirstByOrderByIdDesc();
 
 }

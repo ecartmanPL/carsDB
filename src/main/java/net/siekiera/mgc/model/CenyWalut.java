@@ -3,13 +3,13 @@ package net.siekiera.mgc.model;
 import javax.persistence.*;
 
 /**
- * Created by eric on 16.05.2016.
+ * Przechowuje kurs sprzedazy eur, usd i dane tabeli.
  */
 @Entity
 @Table(name = "ceny_walut")
 public class CenyWalut {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String numerTabeli;
     private String dataNotowania;

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import net.siekiera.mgc.dao.CenyWalutDao;
 import net.siekiera.mgc.model.CenyWalut;
 import net.siekiera.mgc.model.Currency;
 import net.siekiera.mgc.model.CurrencyTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -18,12 +20,15 @@ import org.w3c.dom.Element;
 
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 @Service
 public class CurrencyService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    CenyWalutDao cenyWalutDao;
     /**
      * Method provides comlete and latest currencyTable object
      *
@@ -78,7 +83,11 @@ public class CurrencyService {
         return currencyList;
     }
 
-    public CenyWalut getCenyWalut() {
+    /**
+     * Pobiera aktualne ceny walut z nbp i składa w obiekt
+     * @return
+     */
+    public CenyWalut getCenyWalutFromNBP() {
         CenyWalut cenyWalut = new CenyWalut();
         cenyWalut.setDataNotowania(getLatestTableInfo("data_publikacji"));
         cenyWalut.setNumerTabeli(getLatestTableInfo("numer_tabeli"));
@@ -92,6 +101,21 @@ public class CurrencyService {
             }
         }
         return cenyWalut;
+    }
+
+    /**
+     * Pobiera najnowsze ceny walut z lokalnej bazy danych
+     * @return
+     */
+    public CenyWalut getCenyWalutFromLocalDB() {
+        CenyWalut cenyWalut = cenyWalutDao.findFirstByOrderByIdDesc().get(0);
+        return cenyWalut;
+    }
+
+    @PostConstruct
+    public void updateCenyWalut() {
+        CenyWalut cenyWalut = getCenyWalutFromNBP();
+        cenyWalutDao.save(cenyWalut);
     }
 
     /**

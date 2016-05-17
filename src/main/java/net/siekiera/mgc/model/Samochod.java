@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "samochody")
 public class Samochod {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(cascade = CascadeType.ALL)
     private Marka marka;
@@ -22,8 +22,8 @@ public class Samochod {
     private Integer przebieg;
     private Integer moc;
     private Double cena;
-    private Integer cenaUsd;
-    private Integer cenaEur;
+    private Double cenaUsd;
+    private Double cenaEur;
     private Boolean faktura;
     @ElementCollection(targetClass = Zdjecie.class)
     @OneToMany(cascade = CascadeType.ALL)
@@ -159,19 +159,19 @@ public class Samochod {
         this.zdjecia.add(zdjecie);
     }
 
-    public Integer getCenaUsd() {
+    public Double getCenaUsd() {
         return cenaUsd;
     }
 
-    public void setCenaUsd(Integer cenaUsd) {
+    public void setCenaUsd(Double cenaUsd) {
         this.cenaUsd = cenaUsd;
     }
 
-    public Integer getCenaEur() {
+    public Double getCenaEur() {
         return cenaEur;
     }
 
-    public void setCenaEur(Integer cenaEur) {
+    public void setCenaEur(Double cenaEur) {
         this.cenaEur = cenaEur;
     }
 }

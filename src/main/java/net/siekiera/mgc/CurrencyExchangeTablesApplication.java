@@ -14,19 +14,9 @@ import java.util.List;
 @SpringBootApplication
 @ComponentScan("net.siekiera")
 public class CurrencyExchangeTablesApplication {
-    @Autowired
-    CurrencyService currencyService;
-    @Autowired
-    CenyWalutDao cenyWalutDao;
 
     public static void main(String[] args) {
         SpringApplication.run(CurrencyExchangeTablesApplication.class, args);
     }
 
-    @PostConstruct
-    public void update() {
-        CenyWalut cenyWalut = currencyService.getCenyWalut();
-        cenyWalutDao.save(cenyWalut);
-// nie potrafie zrobic find last row!
-    }
 }

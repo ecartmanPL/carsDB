@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "zdjecia")
 public class Zdjecie {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String sciezka;
 

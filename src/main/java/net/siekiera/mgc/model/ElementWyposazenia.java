@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "wyposazenie")
 public class ElementWyposazenia {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String nazwa;
 

@@ -5,20 +5,46 @@
 </head>
 <body>
 <div th:replace="/fragments/navbar"></div>
-<div class="container">
-    <div class="main">
-        <div th:if="${message}">
-            <h2 th:text="${message}"/>
-        </div>
-        <h1>Lista wszystkich samochodow</h1>
 
-        <ul>
-            <li th:each="samochod:${samochody}">
-                <div th:text="${samochod.marka.nazwa}">marka</div>
-            </li>
-        </ul>
-        <div th:replace="/fragments/scripts"></div>
+<div class="container">
+    <div th:each="samochod: ${samochody}" class="row ogloszenieNaLiscie">
+        <div class="col-md-4">
+            <img src="http://placehold.it/800x533" class="img-responsive"></img>
+            <div>Cena: <span th:text="${#numbers.formatDecimal(samochod.cena, 0, 2)}">cenaPln</span> zł / <span
+                    th:text="${#numbers.formatDecimal(samochod.cenaUsd, 0, 2)}">cenaUsd</span> USD / <span
+                    th:text="${#numbers.formatDecimal(samochod.cenaEur, 0, 2)}">cenaEur</span> EUR
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h3 th:text="${samochod.tytul}">Tytul</h3>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td>Rocznik</td>
+                    <td th:text="${samochod.rokProdukcji}">Rocznik</td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td th:text="${samochod.model}">Model</td>
+                </tr>
+                <tr>
+                    <td>Pojemność skokowa</td>
+                    <td th:text="${samochod.pojemnoscSkokowa}">Pojemność skokowa</td>
+                </tr>
+                <tr>
+                    <td>Przebieg</td>
+                    <td th:text="${samochod.przebieg}">Przebieg</td>
+                </tr>
+                <tr>
+                    <td>Moc</td>
+                    <td th:text="${samochod.moc}">Moc</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<div th:replace="/fragments/scripts"></div>
 </body>
 </html>

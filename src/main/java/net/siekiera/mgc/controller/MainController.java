@@ -39,7 +39,7 @@ public class MainController {
 
     @RequestMapping("/updatecurr")
     public String updateCurr(Model model) {
-        CenyWalut cenyWalut = currencyService.getCenyWalut();
+        CenyWalut cenyWalut = currencyService.getCenyWalutFromNBP();
         Double cena;
         cena = 12500.0;
         cena = cena * cenyWalut.getEur();
@@ -77,7 +77,10 @@ public class MainController {
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
     public String listAll(Model model) {
         List<Samochod> samochody = new ArrayList<Samochod>();
+        CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
         for (Samochod samochod : samochodDao.findAll()) {
+            samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
+            samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
             samochody.add(samochod);
         }
         model.addAttribute("samochody", samochody);
