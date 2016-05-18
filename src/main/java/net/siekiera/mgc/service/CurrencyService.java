@@ -28,22 +28,7 @@ public class CurrencyService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    CenyWalutDao cenyWalutDao;
-    /**
-     * Method provides comlete and latest currencyTable object
-     *
-     * @return
-     */
-
-    public CurrencyTable getLatestTable() {
-        String buySellTableName = getLatestBuySellTableUrl();
-        log.info("Znalazłem adres najnowszej tabeli: {}", getLatestBuySellTableUrl());
-        CurrencyTable currencyTable = new CurrencyTable();
-        currencyTable.setTableNumber(getLatestTableInfo("numer_tabeli"));
-        currencyTable.setPublicationDate(getLatestTableInfo("data_publikacji"));
-        currencyTable.setCurrencyList(getCurrencyList());
-        return currencyTable;
-    }
+    private CenyWalutDao cenyWalutDao;
 
     private List<Currency> getCurrencyList() {
         List<Currency> currencyList = new ArrayList<Currency>();
@@ -85,6 +70,7 @@ public class CurrencyService {
 
     /**
      * Pobiera aktualne ceny walut z nbp i składa w obiekt
+     *
      * @return
      */
     public CenyWalut getCenyWalutFromNBP() {
@@ -92,7 +78,7 @@ public class CurrencyService {
         cenyWalut.setDataNotowania(getLatestTableInfo("data_publikacji"));
         cenyWalut.setNumerTabeli(getLatestTableInfo("numer_tabeli"));
         List<Currency> currencyList = getCurrencyList();
-        for (Currency currency: currencyList) {
+        for (Currency currency : currencyList) {
             if (currency.getCurrencyCode().equals("USD")) {
                 cenyWalut.setUsd(currency.getSellCourse());
             }
@@ -105,6 +91,7 @@ public class CurrencyService {
 
     /**
      * Pobiera najnowsze ceny walut z lokalnej bazy danych
+     *
      * @return
      */
     public CenyWalut getCenyWalutFromLocalDB() {
@@ -115,7 +102,12 @@ public class CurrencyService {
     @PostConstruct
     public void updateCenyWalut() {
         CenyWalut cenyWalut = getCenyWalutFromNBP();
-        cenyWalutDao.save(cenyWalut);
+        if (cenyWalut.getEur() != null && cenyWalut.getUsd() != null && cenyWalut.getDataNotowania() != null
+                && cenyWalut.getNumerTabeli() != null) {
+            cenyWalutDao.save(cenyWalut);
+        } else {
+            log.error("Metoda getCenyWalutFromNBP zwrocila null! Nie zapisuje do bazy!");
+        }
     }
 
     /**
@@ -146,28 +138,7 @@ public class CurrencyService {
      * @return
      */
     private String getLatestBuySellTableUrl() {
-        Scanner scanner = null;
-        List<String> allFileNames = new ArrayList<String>();
-        try {
-            URL url = new URL("http://www.nbp.pl/kursy/xml/dir.txt");
-            scanner = new Scanner(url.openStream());
-            while (scanner.hasNext()) {
-                allFileNames.add(scanner.nextLine());
-            }
-        } catch (Exception e) {
-            log.error("Wystąpił wyjątek przy pobieraniu listy tabel z nbp.pl");
-        } finally {
-            scanner.close();
-        }
-        StringBuilder lastLine = new StringBuilder(allFileNames.get(allFileNames.size() - 1));
-        String prefix = "http://www.nbp.pl/kursy/xml/";
-        lastLine.setCharAt(0, 'c');
-        lastLine.append(".xml");
-        return prefix + lastLine.toString();
-    }
-
-    public void test() {
-        log.info("Wywołano metodę CurrencyService:test()");
+        return "http://www.nbp.pl/kursy/xml/LastC.xml";
     }
 
 }

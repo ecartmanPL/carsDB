@@ -1,5 +1,7 @@
 package net.siekiera.mgc.model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +27,10 @@ public class Samochod {
     private Double cenaUsd;
     private Double cenaEur;
     private Boolean faktura;
-    @ElementCollection(targetClass = Zdjecie.class)
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
     private String opis;
-    @ElementCollection(targetClass = ElementWyposazenia.class)
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
 
     public Samochod() {

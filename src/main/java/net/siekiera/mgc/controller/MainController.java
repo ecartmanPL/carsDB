@@ -37,22 +37,6 @@ public class MainController {
         return "homePage";
     }
 
-    @RequestMapping("/updatecurr")
-    public String updateCurr(Model model) {
-        CenyWalut cenyWalut = currencyService.getCenyWalutFromNBP();
-        Double cena;
-        cena = 12500.0;
-        cena = cena * cenyWalut.getEur();
-        return "redirect:/";
-    }
-
-    @RequestMapping("/table")
-    public String showLatestTable(Model model) {
-        CurrencyTable currencyTable = currencyService.getLatestTable();
-        model.addAttribute("currencyTable", currencyTable);
-        return "table";
-    }
-
     @RequestMapping(value = "/newcar", method = RequestMethod.GET)
     public String newCar(Model model) {
         model.addAttribute("samochod", new Samochod());

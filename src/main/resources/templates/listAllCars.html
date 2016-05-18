@@ -11,8 +11,8 @@
         <div class="col-md-4">
             <img src="http://placehold.it/800x533" class="img-responsive"></img>
             <div>Cena: <span th:text="${#numbers.formatDecimal(samochod.cena, 0, 2)}">cenaPln</span> zł / <span
-                    th:text="${#numbers.formatDecimal(samochod.cenaUsd, 0, 2)}">cenaUsd</span> USD / <span
-                    th:text="${#numbers.formatDecimal(samochod.cenaEur, 0, 2)}">cenaEur</span> EUR
+                    th:text="${#numbers.formatDecimal(samochod.cenaUsd, 1, 2)}">cenaUsd</span> USD / <span
+                    th:text="${#numbers.formatDecimal(samochod.cenaEur, 1, 2)}">cenaEur</span> EUR
             </div>
         </div>
         <div class="col-md-8">

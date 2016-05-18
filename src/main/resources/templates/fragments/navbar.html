@@ -13,7 +13,6 @@
             <ul class="nav navbar-nav">
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/listall' ? 'active':''}"><a href="/listall">Wszystkie samochody</a></li>
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/newcar' ? 'active':''}"><a href="/newcar">Dodaj samochód</a></li>
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/table' ? 'active':''}"><a href="/table">Kursy walut</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
