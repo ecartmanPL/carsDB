@@ -1,5 +1,6 @@
 package net.siekiera.mgc.controller;
 
+import net.siekiera.mgc.configuration.Const;
 import net.siekiera.mgc.dao.CenyWalutDao;
 import net.siekiera.mgc.dao.MarkaDao;
 import net.siekiera.mgc.dao.SamochodDao;
@@ -54,8 +55,8 @@ public class MainController {
         }
         samochodDao.save(samochod);
         redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded files!");
-        return "redirect:/newcar";
+                "Zapisano dane do bazy. [id=" + samochod.getId()+"]");
+        return "redirect:/listall";
     }
 
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
@@ -69,5 +70,33 @@ public class MainController {
         }
         model.addAttribute("samochody", samochody);
         return "listAllCars";
+    }
+
+    @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
+    public String showSingleCar(@PathVariable("id") int id, Model model) {
+        Samochod samochod = samochodDao.findOne(id);
+        model.addAttribute("samochod", samochod);
+        return "singleCar";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editCar(@PathVariable("id") int id, Model model) {
+        Samochod samochod = samochodDao.findOne(id);
+        model.addAttribute("samochod", samochod);
+        model.addAttribute("allMarka", markaDao.findAll());
+        model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
+        return "newCar";
+    }
+
+    @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+    public String deleteCar(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
+        Samochod samochod = samochodDao.findOne(id);
+        samochod.setListaWyposazenia(null);
+        //samochod.setZdjecia(null);
+        samochod.setMarka(null);
+        samochodDao.delete(samochod);
+        redirectAttributes.addFlashAttribute("message",
+                "Usunąłem samochód z bazy. [id=" + samochod.getId()+"]");
+        return "redirect:/listall";
     }
 }

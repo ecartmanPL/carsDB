@@ -8,5 +8,11 @@ body {
       padding: 5px;
   }
   .ogloszenieNaLiscie > div > img {
-      margin-top: 20px;
+    margin-top: 20px;
   }
+  .btn-group {
+    display: inline-block;
+    }
+  .right {
+    text-align: right;
+    }

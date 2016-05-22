@@ -13,21 +13,55 @@
         <h1>Dodawanie samochodu</h1>
 
         <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post" enctype="multipart/form-data">
-            <div>Tytuł ogłoszenia: <input type="text" th:field="*{tytul}"/></div>
-            <div>Marka: <select th:field="*{marka}">
-                <option th:each="marka : ${allMarka}" th:value="${marka.id}" th:text="${marka.nazwa}">Marka</option>
-            </select></div>
-            <div>Model: <input type="text" th:field="*{model}"/></div>
-            <div>Rok produkcji: <input type="text" th:field="*{rokProdukcji}"/></div>
-            <div>Pojemność skokowa: <input type="text" th:field="*{pojemnoscSkokowa}"/></div>
-            <div>Przebieg: <input type="text" th:field="*{przebieg}"/></div>
-            <div>Moc: <input type="text" th:field="*{moc}"/></div>
-            <div>Cena (pln): <input type="text" th:field="*{cena}"/></div>
-            <div>Zdjęcie: <input type="file" name="file" multiple="multiple"/></div>
-            <div th:each="elWyposazenia : ${allWyposazenie}">
-                <input type="checkbox" th:field="*{listaWyposazenia}" th:value="${elWyposazenia.id}" th:text="${elWyposazenia.nazwa}"/>
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label for="tytul">Tytuł ogłoszenia</label>
+                <input type="text" class="form-control" placeholder="Tytuł ogłoszenia" id="tytul" th:field="*{tytul}"/>
             </div>
-            <div><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></div>
+            <div class="form-group">
+                <label for="marka">Marka</label>
+                <select th:field="*{marka}" class="form-control" id="marka">
+                    <option th:each="marka : ${allMarka}" th:value="${marka.id}" th:text="${marka.nazwa}">Marka</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" placeholder="Model" id="model" th:field="*{model}"/>
+            </div>
+            <div class="form-group">
+                <label for="rok">Rok produkcji</label>
+                <input type="text" class="form-control" placeholder="Rok produkcji" id="rok"
+                       th:field="*{rokProdukcji}"/>
+            </div>
+            <div class="form-group">
+                <label for="pojemnosc">Pojemność skokowa</label>
+                <input type="text" class="form-control" placeholder="Pojemnosc skokowa" id="pojemnosc"
+                       th:field="*{pojemnoscSkokowa}"/>
+            </div>
+            <div class="form-group">
+                <label for="przebieg">Przebieg</label>
+                <input type="text" class="form-control" placeholder="Przebieg" id="przebieg" th:field="*{przebieg}"/>
+            </div>
+            <div class="form-group">
+                <label for="moc">Moc</label>
+                <input type="text" class="form-control" placeholder="Moc" id="moc" th:field="*{moc}"/>
+            </div>
+            <div class="form-group">
+                <label for="cena">Cena</label>
+                <input type="text" class="form-control" placeholder="Cena" id="cena" th:field="*{cena}"/>
+            </div>
+            <div class="form-group">
+                <label for="zdjecia">Zdjęcia</label>
+                <input type="file" name="file" multiple="multiple" placeholder="Zdjecia" id="zdjecia"/>
+            </div>
+            <div class="checkbox" th:each="elWyposazenia : ${allWyposazenie}">
+                <label><input type="checkbox" th:field="*{listaWyposazenia}" th:value="${elWyposazenia.id}"
+                              th:text="${elWyposazenia.nazwa}"/></label>
+            </div>
+
+
+            <div><input type="submit" class="btn btn-success" value="Zapisz"/> <input type="reset" class="btn btn-danger" value="Reset"/></div>
         </form>
 
         <div th:replace="/fragments/scripts"></div>

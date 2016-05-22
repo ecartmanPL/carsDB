@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <div th:replace="/fragments/head"></div>
+</head>
+<body>
+<div th:replace="/fragments/navbar"></div>
+
+<div class="container">
+    <h1>Single car presentation!</h1>
+    <div th:text="${samochod.model}">Model samochodu</div>
+</div>
+
+<div th:replace="/fragments/scripts"></div>
+</body>
+</html>
