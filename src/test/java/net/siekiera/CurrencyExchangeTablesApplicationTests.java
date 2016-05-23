@@ -6,10 +6,10 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import net.siekiera.mgc.CurrencyExchangeTablesApplication;
+import net.siekiera.mgc.Mgc;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = CurrencyExchangeTablesApplication.class)
+@SpringApplicationConfiguration(classes = Mgc.class)
 @WebAppConfiguration
 public class CurrencyExchangeTablesApplicationTests {
 

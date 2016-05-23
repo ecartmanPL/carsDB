@@ -24,7 +24,9 @@ public class Samochod {
     private Integer przebieg;
     private Integer moc;
     private Double cena;
+    @Transient
     private Double cenaUsd;
+    @Transient
     private Double cenaEur;
     private Boolean faktura;
     @ManyToMany(cascade = CascadeType.ALL)

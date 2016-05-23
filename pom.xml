@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.siekiera</groupId>
-	<artifactId>currencyExchangeTables</artifactId>
+	<artifactId>mgc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>currencyExchangeTables</name>
-	<description>Demo project for Spring Boot</description>
+	<name>mgc</name>
+	<description>Baza danych dla MGC</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -20,7 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencies>
