@@ -5,4 +5,5 @@ package net.siekiera.mgc.configuration;
  */
 public class Const {
     public static final String test = "to jest test";
+    public static final String uploadPath = "/uploads/";
 }

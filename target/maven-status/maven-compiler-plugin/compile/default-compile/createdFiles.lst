@@ -4,6 +4,7 @@ net/siekiera/mgc/model/Currency.class
 net/siekiera/mgc/dao/SamochodDao.class
 net/siekiera/mgc/service/CurrencyService.class
 net/siekiera/mgc/controller/MainController.class
+net/siekiera/mgc/service/SamochodService.class
 net/siekiera/mgc/dao/WyposazenieDao.class
 net/siekiera/mgc/model/Marka.class
 net/siekiera/mgc/configuration/Const.class

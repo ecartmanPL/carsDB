@@ -3,6 +3,7 @@
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/service/PhotoUploadService.java
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/model/Zdjecie.java
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/Mgc.java
+/Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/service/SamochodService.java
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/dao/ZdjecieDao.java
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/model/Marka.java
 /Users/eric/Documents/mgc/src/main/java/net/siekiera/mgc/service/CurrencyService.java

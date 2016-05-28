@@ -1,5 +1,6 @@
 package net.siekiera.mgc.service;
 
+import net.siekiera.mgc.configuration.Const;
 import net.siekiera.mgc.model.Zdjecie;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +27,7 @@ public class PhotoUploadService {
         if (!file.isEmpty()) {
             try {
                 String name = file.getOriginalFilename();
-                sciezka = "/Users/eric/Documents/uploadtest/" + fileNameAddHash(name);
+                sciezka = Const.uploadPath + fileNameAddHash(name);
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(new File(sciezka)));
                 FileCopyUtils.copy(file.getInputStream(), stream);

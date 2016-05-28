@@ -1,14 +1,16 @@
 package net.siekiera.mgc.controller;
 
-import net.siekiera.mgc.configuration.Const;
 import net.siekiera.mgc.dao.CenyWalutDao;
 import net.siekiera.mgc.dao.MarkaDao;
 import net.siekiera.mgc.dao.SamochodDao;
 import net.siekiera.mgc.model.*;
+import net.siekiera.mgc.service.SamochodService;
 import net.siekiera.mgc.service.CurrencyService;
 import net.siekiera.mgc.dao.WyposazenieDao;
 import net.siekiera.mgc.service.PhotoUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,8 @@ public class MainController {
     MarkaDao markaDao;
     @Autowired
     SamochodDao samochodDao;
+    @Autowired
+    SamochodService samochodService;
 
     @RequestMapping("/")
     public String homePage() {
@@ -50,32 +54,44 @@ public class MainController {
     public String newCarSave(@RequestParam("file") List<MultipartFile> files, @ModelAttribute Samochod samochod,
                              Model model, RedirectAttributes redirectAttributes) {
         for (MultipartFile singleFile : files) {
-            Zdjecie zdjecie = photoUploadService.upload(singleFile);
-            samochod.dodajZdjecie(zdjecie);
+            if (!singleFile.isEmpty()) {
+                Zdjecie zdjecie = photoUploadService.upload(singleFile);
+                samochod.dodajZdjecie(zdjecie);
+            }
         }
-        samochodDao.save(samochod);
+        CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
+        samochod = samochodService.ustawCenyWalutoweSamochodu(samochod);
+        samochodService.zapisz(samochod);
         redirectAttributes.addFlashAttribute("message",
-                "Zapisano dane do bazy. [id=" + samochod.getId()+"]");
+                "Zapisano dane do bazy. [id=" + samochod.getId() + " tytuł=" + samochod.getTytul() + "]");
         return "redirect:/listall";
     }
 
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
-    public String listAll(Model model) {
+    public String listAll(Model model, Pageable pageable) {
         List<Samochod> samochody = new ArrayList<Samochod>();
         CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
-        for (Samochod samochod : samochodDao.findAll()) {
+        Page<Samochod> samochodyPage = samochodDao.findAll(pageable);
+        // do wyjebania!
+        for (Samochod samochod : samochodyPage) {
             samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
             samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
-            samochody.add(samochod);
         }
-        model.addAttribute("samochody", samochody);
+        // koniec do wyjebania!
+        model.addAttribute("samochody", samochodyPage);
         return "listAllCars";
     }
 
     @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
     public String showSingleCar(@PathVariable("id") int id, Model model) {
         Samochod samochod = samochodDao.findOne(id);
+        String opisHtml = new String();
         model.addAttribute("samochod", samochod);
+        //Dodajemy HTMLowe znaki nowych linii do opisu.
+        if (samochod.getOpis()!=null && !samochod.getOpis().isEmpty()) {
+            opisHtml = samochod.getOpis().replace("\r\n", "<br/>");
+            samochod.setOpis(opisHtml);
+        }
         return "singleCar";
     }
 
@@ -88,7 +104,7 @@ public class MainController {
         return "newCar";
     }
 
-    @RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteCar(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         Samochod samochod = samochodDao.findOne(id);
         samochod.setListaWyposazenia(null);
@@ -96,7 +112,13 @@ public class MainController {
         samochod.setMarka(null);
         samochodDao.delete(samochod);
         redirectAttributes.addFlashAttribute("message",
-                "Usunąłem samochód z bazy. [id=" + samochod.getId()+"]");
+                "Usunąłem samochód z bazy. [id=" + samochod.getId() + "]");
         return "redirect:/listall";
+    }
+
+    @RequestMapping(value = "/json/{samochodId}")
+    @ResponseBody
+    public Samochod jsonSamochod(@PathVariable("samochodId") Integer samochodId) {
+        return samochodDao.findOne(samochodId);
     }
 }

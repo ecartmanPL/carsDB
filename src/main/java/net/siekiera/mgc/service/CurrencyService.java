@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import net.siekiera.mgc.dao.CenyWalutDao;
+import net.siekiera.mgc.dao.SamochodDao;
 import net.siekiera.mgc.model.CenyWalut;
 import net.siekiera.mgc.model.Currency;
 import net.siekiera.mgc.model.CurrencyTable;
+import net.siekiera.mgc.model.Samochod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class CurrencyService {
 
     @Autowired
     private CenyWalutDao cenyWalutDao;
+    @Autowired
+    private SamochodDao samochodDao;
 
     private List<Currency> getCurrencyList() {
         List<Currency> currencyList = new ArrayList<Currency>();
@@ -105,8 +109,27 @@ public class CurrencyService {
         if (cenyWalut.getEur() != null && cenyWalut.getUsd() != null && cenyWalut.getDataNotowania() != null
                 && cenyWalut.getNumerTabeli() != null) {
             cenyWalutDao.save(cenyWalut);
+            updateAllCarsPrices();
         } else {
             log.error("Metoda getCenyWalutFromNBP zwrocila null! Nie zapisuje do bazy!");
+        }
+    }
+
+
+    /**
+     * Metoda aktualizuje ceny walutowe wszystkich samochodow
+     */
+    private void updateAllCarsPrices() {
+        CenyWalut cenyWalut = getCenyWalutFromNBP();
+        if (cenyWalut.getUsd() != null && cenyWalut.getEur() != null && cenyWalut.getDataNotowania() != null
+                && cenyWalut.getNumerTabeli() != null) {
+            Iterable<Samochod> samochody = samochodDao.findAll();
+            for (Samochod samochod : samochody){
+                samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
+                samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
+                samochodDao.save(samochod);
+                log.debug("Zaktualizowano cenę samochodu o id=" + samochod.getId());
+            }
         }
     }
 

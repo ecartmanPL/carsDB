@@ -12,12 +12,16 @@
         </div>
         <h1>Dodawanie samochodu</h1>
 
-        <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post" enctype="multipart/form-data">
+        <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
             <input type="hidden" th:field="*{id}"/>
 
             <div class="form-group">
                 <label for="tytul">Tytuł ogłoszenia</label>
                 <input type="text" class="form-control" placeholder="Tytuł ogłoszenia" id="tytul" th:field="*{tytul}"/>
+            </div>
+            <div class="form-group">
+                <label for="opis">Opis</label>
+                <textarea th:field="*{opis}" class="form-control" rows="5" id="opis"></textarea>
             </div>
             <div class="form-group">
                 <label for="marka">Marka</label>
