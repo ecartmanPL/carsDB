@@ -14,6 +14,7 @@ import net.siekiera.mgc.model.Samochod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -120,7 +121,7 @@ public class CurrencyService {
      * Metoda aktualizuje ceny walutowe wszystkich samochodow
      */
     private void updateAllCarsPrices() {
-        CenyWalut cenyWalut = getCenyWalutFromNBP();
+        CenyWalut cenyWalut = getCenyWalutFromLocalDB();
         if (cenyWalut.getUsd() != null && cenyWalut.getEur() != null && cenyWalut.getDataNotowania() != null
                 && cenyWalut.getNumerTabeli() != null) {
             Iterable<Samochod> samochody = samochodDao.findAll();
@@ -128,7 +129,7 @@ public class CurrencyService {
                 samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
                 samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
                 samochodDao.save(samochod);
-                log.debug("Zaktualizowano cenę samochodu o id=" + samochod.getId());
+                //log.debug("Zaktualizowano cenę samochodu o id=" + samochod.getId());
             }
         }
     }
@@ -147,7 +148,7 @@ public class CurrencyService {
             document.getDocumentElement().normalize();
             NodeList nList = null;
             nList = document.getElementsByTagName(info);
-            log.info("Znalazłem i zwracam tableInfo {} = {}", info, nList.item(0).getTextContent());
+            //log.info("Znalazłem i zwracam tableInfo {} = {}", info, nList.item(0).getTextContent());
             return nList.item(0).getTextContent();
         } catch (Exception e) {
             log.error("Wystąpił wyjątek przy pobieraniu danych (getLatestTableInfo)");

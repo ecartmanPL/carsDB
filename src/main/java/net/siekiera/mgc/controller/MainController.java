@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -88,8 +92,8 @@ public class MainController {
         String opisHtml = new String();
         model.addAttribute("samochod", samochod);
         //Dodajemy HTMLowe znaki nowych linii do opisu.
-        if (samochod.getOpis()!=null && !samochod.getOpis().isEmpty()) {
-            opisHtml = samochod.getOpis().replace("\r\n", "<br/>");
+        if (samochod.getOpis() != null && !samochod.getOpis().isEmpty()) {
+            opisHtml = samochod.getOpis().replace("\r\n", "</br>");
             samochod.setOpis(opisHtml);
         }
         return "singleCar";
@@ -120,5 +124,40 @@ public class MainController {
     @ResponseBody
     public Samochod jsonSamochod(@PathVariable("samochodId") Integer samochodId) {
         return samochodDao.findOne(samochodId);
+    }
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public @ResponseBody LinkedList<Zdjecie> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+        LinkedList<Zdjecie> files = new LinkedList<Zdjecie>();
+        Zdjecie zdjecie = null;
+        //1. build an iterator
+        Iterator<String> itr = request.getFileNames();
+        MultipartFile mpf = null;
+
+        //2. get each file
+        while (itr.hasNext()) {
+
+            //2.1 get next MultipartFile
+            mpf = request.getFile(itr.next());
+            System.out.println(mpf.getOriginalFilename() + " uploaded! " + files.size());
+
+            //2.2 if files > 10 remove the first from the list
+            if (files.size() >= 10)
+                files.pop();
+
+            //2.3 create new fileMeta
+            zdjecie = new Zdjecie();
+            zdjecie.setSciezka(mpf.getOriginalFilename());
+
+            files.add(zdjecie);
+        }
+        // result will be like this
+        // [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
+        return files;
+    }
+
+    @RequestMapping(value= "/photoUpload", method= RequestMethod.GET)
+    public String photoUpload() {
+        return "photoUpload";
     }
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <div th:replace="fragments/head"></div>
+</head>
+<body>
+<div th:replace="fragments/navbar"></div>
+<div class="container">
+    <div class="main">
+        <div th:if="${message}">
+            <h2 th:text="${message}"/>
+        </div>
+        <h1>Dodawanie samochodu</h1>
+
+        <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select files...</span>
+            <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]" multiple="multiple"/>
+        </span>
+
+        <div class="form-group">
+            <label for="zdjecia">Zdjęcia</label>
+            <input type="file" name="files[]" multiple="multiple" placeholder="Zdjecia" id="zdjecia"
+                   data-url="/upload"/>
+        </div>
+        <div id="progress" class="progress">
+            <div class="progress-bar progress-bar-success"></div>
+        </div>
+        <!-- The container for the uploaded files -->
+        <div id="files" class="files"></div>
+
+
+        <div th:replace="fragments/scripts"></div>
+    </div>
+</div>
+</body>
+</html>

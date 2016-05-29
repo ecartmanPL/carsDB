@@ -1,2 +1,26 @@
 <script src="/webjars/jquery/2.2.3/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/webjars/jquery-file-upload/8.4.2/js/jquery.fileupload.js"></script>
+<script src="/webjars/jquery.iframe-transport/1.0.0/jquery.iframe-transport.js"></script>
+<script src="/webjars/jquery-file-upload/8.4.2/js/jquery.fileupload.js"></script>
+<script src="/jquery.ui.widget.js"></script>
+<script>
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo('#files');
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>

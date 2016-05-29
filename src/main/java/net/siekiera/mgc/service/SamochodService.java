@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by eric on 26.05.2016.
+ * Serwis obsługujący obiekty klasy Samochód
  */
 
 @Service

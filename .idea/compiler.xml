@@ -28,7 +28,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="currencyExchangeTables" target="1.8" />
-      <module name="mgc" target="1.7" />
+      <module name="mgc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
