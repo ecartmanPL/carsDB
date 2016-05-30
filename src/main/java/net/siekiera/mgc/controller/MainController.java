@@ -119,45 +119,4 @@ public class MainController {
                 "Usunąłem samochód z bazy. [id=" + samochod.getId() + "]");
         return "redirect:/listall";
     }
-
-    @RequestMapping(value = "/json/{samochodId}")
-    @ResponseBody
-    public Samochod jsonSamochod(@PathVariable("samochodId") Integer samochodId) {
-        return samochodDao.findOne(samochodId);
-    }
-
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody LinkedList<Zdjecie> upload(MultipartHttpServletRequest request, HttpServletResponse response) {
-        LinkedList<Zdjecie> files = new LinkedList<Zdjecie>();
-        Zdjecie zdjecie = null;
-        //1. build an iterator
-        Iterator<String> itr = request.getFileNames();
-        MultipartFile mpf = null;
-
-        //2. get each file
-        while (itr.hasNext()) {
-
-            //2.1 get next MultipartFile
-            mpf = request.getFile(itr.next());
-            System.out.println(mpf.getOriginalFilename() + " uploaded! " + files.size());
-
-            //2.2 if files > 10 remove the first from the list
-            if (files.size() >= 10)
-                files.pop();
-
-            //2.3 create new fileMeta
-            zdjecie = new Zdjecie();
-            zdjecie.setSciezka(mpf.getOriginalFilename());
-
-            files.add(zdjecie);
-        }
-        // result will be like this
-        // [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
-        return files;
-    }
-
-    @RequestMapping(value= "/photoUpload", method= RequestMethod.GET)
-    public String photoUpload() {
-        return "photoUpload";
-    }
 }

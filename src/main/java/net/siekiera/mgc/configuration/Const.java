@@ -5,5 +5,6 @@ package net.siekiera.mgc.configuration;
  */
 public class Const {
     public static final String test = "to jest test";
-    public static final String uploadPath = "/uploads/";
+    //pamietaj o znaku "/" na koncu sciezki!
+    public static final String uploadPath = "/Users/eric/Desktop/upl/";
 }
