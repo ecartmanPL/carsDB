@@ -1,5 +1,6 @@
 package net.siekiera.mgc.controller;
 
+import net.siekiera.mgc.configuration.Const;
 import net.siekiera.mgc.dao.CenyWalutDao;
 import net.siekiera.mgc.dao.MarkaDao;
 import net.siekiera.mgc.dao.SamochodDao;
@@ -8,8 +9,11 @@ import net.siekiera.mgc.service.SamochodService;
 import net.siekiera.mgc.service.CurrencyService;
 import net.siekiera.mgc.dao.WyposazenieDao;
 import net.siekiera.mgc.service.PhotoUploadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +44,7 @@ public class MainController {
     SamochodDao samochodDao;
     @Autowired
     SamochodService samochodService;
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("/")
     public String homePage() {
@@ -75,12 +80,15 @@ public class MainController {
     public String listAll(Model model, Pageable pageable) {
         List<Samochod> samochody = new ArrayList<Samochod>();
         CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
-        Page<Samochod> samochodyPage = samochodDao.findAll(pageable);
+        Integer pageNumber = pageable.getPageNumber();
+        Page<Samochod> samochodyPage = samochodDao.findAll(new PageRequest(pageNumber, Const.numberOfCarsPerPage));
+        log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
+
         // do wyjebania!
-        for (Samochod samochod : samochodyPage) {
-            samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
-            samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
-        }
+        //for (Samochod samochod : samochodyPage) {
+        //    samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
+        //    samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
+        //}
         // koniec do wyjebania!
         model.addAttribute("samochody", samochodyPage);
         return "listAllCars";

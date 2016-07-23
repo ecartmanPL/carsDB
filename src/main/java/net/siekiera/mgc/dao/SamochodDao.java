@@ -12,5 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface SamochodDao extends PagingAndSortingRepository<Samochod, Integer> {
-    public Samochod findByModel(String nazwa);
+//    Samochod findByModel(String nazwa);
 }
