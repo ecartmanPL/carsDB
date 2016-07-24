@@ -1,7 +1,7 @@
 body {
     padding-top: 70px;
   }
-  .ogloszenieNaLiscie {
+  .ogloszenieNaLiscie, .tloWyszukiwarki {
       margin-top: 10px;
       background-color: #eee;
       border-radius: 10px;

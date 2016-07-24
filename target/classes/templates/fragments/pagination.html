@@ -1,4 +1,4 @@
-<div class="pagination">
+<div class="pagination col-md-12">
     <ul class="pagination">
         <li th:if="${samochody.hasPrevious()}"><a th:href="@{/listall/(page=${samochody.getNumber()-1})}" th:text="Poprzednia">Poprzednia</a></li>
         <li th:each="pageNumber : ${#numbers.sequence(1,samochody.getTotalPages())}" th:class="${samochody.getNumber()==pageNumber-1}? active">
