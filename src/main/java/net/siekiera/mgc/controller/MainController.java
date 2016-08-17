@@ -80,6 +80,12 @@ public class MainController {
         return "redirect:/listall";
     }
 
+    @RequestMapping(value="/photoUploadJson", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+    public @ResponseBody String processJsonData(@RequestBody Zdjecie zdjecie) {
+        log.info("Otrzymałem dane JSON (Zdjecie) id="+zdjecie.getId()+" sciezka="+zdjecie.getSciezka());
+        return "JSON processed!";
+    }
+
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
     public String listAll(Model model, Pageable pageable, HttpSession session) {
         List<Samochod> samochody = new ArrayList<Samochod>();
@@ -92,7 +98,8 @@ public class MainController {
         Specification<Samochod> spec = new SamochodSpec(samochodSearch);
         //tu trzeba miec instancje ktora implementuje interfejs Specification
         //samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
-        Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
+        Page<Samochod> samochodyPage = samochodDao.findAll(new PageRequest(pageNumber, Const.numberOfCarsPerPage));
+        //Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
 
         // do wyjebania!

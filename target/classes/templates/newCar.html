@@ -11,7 +11,7 @@
             <h2 th:text="${message}"/>
         </div>
         <h1>Dodawanie samochodu</h1>
-
+        <input type="file" id="fileUpl" multiple="multiple" placeholder="Zdjecia" onchange="myFunction()"/>
         <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
             <input type="hidden" th:field="*{id}"/>
 
@@ -60,11 +60,6 @@
                 <input type="file" name="file" multiple="multiple" placeholder="Zdjecia" id="zdjecia" data-url="/upload"/>
             </div>
             <div><input type="submit" class="btn btn-success" value="Zapisz"/> <input type="reset" class="btn btn-danger" value="Reset"/></div>
-            <div id="progress" class="progress">
-                <div class="progress-bar progress-bar-success"></div>
-            </div>
-            <!-- The container for the uploaded files -->
-            <div id="files" class="files"></div>
             <div class="checkbox" th:each="elWyposazenia : ${allWyposazenie}">
                 <label><input type="checkbox" th:field="*{listaWyposazenia}" th:value="${elWyposazenia.id}"
                               th:text="${elWyposazenia.nazwa}"/></label>
