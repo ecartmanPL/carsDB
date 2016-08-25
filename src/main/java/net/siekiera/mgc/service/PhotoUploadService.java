@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -54,6 +58,26 @@ public class PhotoUploadService {
         String[] split = StringUtils.split(fileName, ".");
         newFileName = split[0] + RandomStringUtils.randomAlphabetic(10) + "." + split[1];
         return newFileName;
+    }
+
+    /**
+     * Metoda pobiera DataUrl i sciezke i zapisuje dataurl do sciezki
+     */
+    public void saveDataUrlAsFile (String dataUrl, String path) {
+        dataUrl = dataUrl.replaceFirst("data:image/jpeg;base64,", "");
+        BufferedImage bi = null;
+        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(dataUrl);
+        try {
+            bi = ImageIO.read(new ByteArrayInputStream(decodedBytes));
+            File outputFile = new File(Const.uploadPath + path);
+            ImageIO.write(bi, "jpeg", outputFile);
+        }
+        catch(Exception e) {
+            log.error("Błąd w metodzie saveDataUrlAsFile" + e.getMessage());
+        }
+        finally {
+            bi.flush();
+        }
     }
 
 }

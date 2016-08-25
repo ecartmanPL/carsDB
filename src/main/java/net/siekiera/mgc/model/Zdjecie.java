@@ -14,9 +14,19 @@ public class Zdjecie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String sciezka;
+    private String nazwaPliku;
+    private String hash;
 
     public Zdjecie() {
 
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public Zdjecie(String sciezka) {
@@ -27,6 +37,14 @@ public class Zdjecie {
 
         this.id = id;
         this.sciezka = sciezka;
+    }
+
+    public String getNazwaPliku() {
+        return nazwaPliku;
+    }
+
+    public void setNazwaPliku(String nazwaPliku) {
+        this.nazwaPliku = nazwaPliku;
     }
 
     public Integer getId() {

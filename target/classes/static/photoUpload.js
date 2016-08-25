@@ -1,14 +1,15 @@
 function myFunction(){
 	var files = document.getElementById("fileUpl").files;
-	console.log('Załadowano ' + files.length + 'plików.');
+	hash = makeHash(10);
+	console.log('Załadowano ' + files.length + 'plików. Mam hash ' + hash);
 	for (var i = 0; i<files.length; i++) {
 		if (files[i].type.match('image.*')) {
-			resize(files[i]);
+			resize(files[i], hash);
 		}
 	}
 };
 
-function resize(file) {
+function resize(file, hash) {
 	console.log("w funkcji A" + file);
 	var rdr = new FileReader();
 	var img = new Image();
@@ -16,10 +17,11 @@ function resize(file) {
 	rdr.onload = function(event) {
 		img.src = event.target.result;
 		console.log('Img.src = ' + img.src);
+		console.log('File.name = ' + file.name);
 		img.onload = function() {
 			var canvas = document.createElement('canvas');
 			console.log('image loaded!' + img);
-			//var ctx = canvas.getContext("2d");
+			//var ctx = canvas.getContext("2ds");
 			//ctx.drawImage(img, 0, 0);
 			var MAX_WIDTH = 800;
 			var MAX_HEIGHT = 600;
@@ -47,7 +49,7 @@ function resize(file) {
 			tImg.setAttribute("width", canvas.width);
 			tImg.setAttribute("height", canvas.height);
 
-			    var dataToSend = JSON.stringify({id : 123, sciezka: dataurl});
+			    var dataToSend = JSON.stringify({id : 123, sciezka: dataurl, nazwaPliku: file.name, hash: hash});
 			    console.log('dataToSend: '+dataToSend);
 			    $.ajax(
                 {
@@ -68,4 +70,14 @@ function resize(file) {
 			document.body.appendChild(tImg);
 		}
 	};
+};
+
+function makeHash(howManyChars) {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for( var i=0; i < howManyChars; i++ )
+    {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+        return text;
 };

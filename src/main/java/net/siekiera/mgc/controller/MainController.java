@@ -82,8 +82,10 @@ public class MainController {
 
     @RequestMapping(value="/photoUploadJson", method = RequestMethod.POST, headers = {"Content-type=application/json"})
     public @ResponseBody String processJsonData(@RequestBody Zdjecie zdjecie) {
-        log.info("Otrzymałem dane JSON (Zdjecie) id="+zdjecie.getId()+" sciezka="+zdjecie.getSciezka());
+        log.info("Otrzymałem dane JSON (Zdjecie) id=" + zdjecie.getId() + " nazwa pliku=" + zdjecie.getNazwaPliku() + " hash=" + zdjecie.getHash() + " sciezka=" + zdjecie.getSciezka());
+        photoUploadService.saveDataUrlAsFile(zdjecie.getSciezka(), zdjecie.getNazwaPliku());
         return "JSON processed!";
+
     }
 
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
@@ -97,17 +99,12 @@ public class MainController {
         session.setAttribute("szukajka", samochodSearch);
         Specification<Samochod> spec = new SamochodSpec(samochodSearch);
         //tu trzeba miec instancje ktora implementuje interfejs Specification
+        //potrzebne do wyszukiwarki!
         //samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
         Page<Samochod> samochodyPage = samochodDao.findAll(new PageRequest(pageNumber, Const.numberOfCarsPerPage));
+        //przykład uzycia wyszukiwarki
         //Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
-
-        // do wyjebania!
-        //for (Samochod samochod : samochodyPage) {
-        //    samochod.setCenaEur(samochod.getCena() / cenyWalut.getEur());
-        //    samochod.setCenaUsd(samochod.getCena() / cenyWalut.getUsd());
-        //}
-        // koniec do wyjebania!
         model.addAttribute("samochody", samochodyPage);
         return "listAllCars";
     }
