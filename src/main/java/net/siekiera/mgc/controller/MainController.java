@@ -48,6 +48,7 @@ public class MainController {
     SamochodDao samochodDao;
     @Autowired
     SamochodService samochodService;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("/")
@@ -80,10 +81,17 @@ public class MainController {
         return "redirect:/listall";
     }
 
-    @RequestMapping(value="/photoUploadJson", method = RequestMethod.POST, headers = {"Content-type=application/json"})
-    public @ResponseBody String processJsonData(@RequestBody Zdjecie zdjecie) {
-        log.info("Otrzymałem dane JSON (Zdjecie) id=" + zdjecie.getId() + " nazwa pliku=" + zdjecie.getNazwaPliku() + " hash=" + zdjecie.getHash() + " sciezka=" + zdjecie.getSciezka());
-        photoUploadService.saveDataUrlAsFile(zdjecie.getSciezka(), zdjecie.getNazwaPliku());
+    @RequestMapping(value = "/photoUploadJson", method = RequestMethod.POST, headers = {"Content-type=application/json"})
+    public
+    @ResponseBody
+    String processJsonData(@RequestBody Zdjecie zdjecie) {
+        log.info("Otrzymałem dane JSON (Zdjecie) id=" + zdjecie.getId() + " nazwa pliku=" + zdjecie.getNazwaPliku()
+                + " hash=" + zdjecie.getHash() + " sciezka=" + zdjecie.getSciezka() + " dataUrl="
+                + zdjecie.getDataUrl());
+        String fileNameWithHash = photoUploadService.getFullFileNameFormFileName(zdjecie.getNazwaPliku());
+        photoUploadService.saveDataUrlAsFile(zdjecie.getDataUrl(), fileNameWithHash);
+        zdjecie.setSciezka(fileNameWithHash);
+        photoUploadService.zapisz(zdjecie);
         return "JSON processed!";
 
     }
@@ -114,6 +122,7 @@ public class MainController {
         Samochod samochod = samochodDao.findOne(id);
         String opisHtml = new String();
         model.addAttribute("samochod", samochod);
+        //model.addAttribute("uploadPath", Const.uploadPath);
         //Dodajemy HTMLowe znaki nowych linii do opisu.
         if (samochod.getOpis() != null && !samochod.getOpis().isEmpty()) {
             opisHtml = samochod.getOpis().replace("\r\n", "</br>");

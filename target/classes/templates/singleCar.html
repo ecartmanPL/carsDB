@@ -63,19 +63,9 @@
         <div class="col-md-6">
             <img src="http://placehold.it/800x533" class="img-responsive"></img>
             <div class="row">
-                <div class="col-md-4">
+                <div th:each="zdjecie: ${samochod.zdjecia}" class="col-md-4">
                     <a href="#" class="thumbnail">
-                        <img src="http://placehold.it/800x533" class="img-responsive"></img>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#" class="thumbnail">
-                        <img src="http://placehold.it/800x533" class="img-responsive"></img>
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <a href="#" class="thumbnail">
-                        <img src="http://placehold.it/800x533" class="img-responsive"></img>
+                        <img th:src="${'/photos/' + zdjecie.sciezka}" src="http://placehold.it/800x533" class="img-responsive"></img>
                     </a>
                 </div>
             </div>

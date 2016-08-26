@@ -49,7 +49,7 @@ function resize(file, hash) {
 			tImg.setAttribute("width", canvas.width);
 			tImg.setAttribute("height", canvas.height);
 
-			    var dataToSend = JSON.stringify({id : 123, sciezka: dataurl, nazwaPliku: file.name, hash: hash});
+			    var dataToSend = JSON.stringify({id : 123, dataUrl: dataurl, nazwaPliku: file.name, hash: hash});
 			    console.log('dataToSend: '+dataToSend);
 			    $.ajax(
                 {

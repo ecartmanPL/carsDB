@@ -9,4 +9,5 @@ public class Const {
     public static final String uploadPath = "/Users/eric/Desktop/upl/";
     //ilosc samochodow wyswietlana jednej stronie
     public static final Integer numberOfCarsPerPage = 8;
+
 }
