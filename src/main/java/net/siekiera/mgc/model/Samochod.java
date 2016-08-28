@@ -1,8 +1,12 @@
 package net.siekiera.mgc.model;
 
+import net.siekiera.mgc.configuration.Const;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,22 +20,43 @@ public class Samochod {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne(cascade = CascadeType.ALL)
+    @NotNull
     private Marka marka;
+    @NotNull
+    @Size(min=1)
     private String model;
+    @NotNull
+    @Size(min=1)
     private String tytul;
+    @Min(0)
     private Integer rokProdukcji;
+    @Min(0)
     private Integer pojemnoscSkokowa;
+    @Min(0)
     private Integer przebieg;
+    @Min(0)
     private Integer moc;
+    @NotNull
+    @Min(0)
     private Double cena;
     private Double cenaUsd;
     private Double cenaEur;
     private Boolean faktura;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
+    @NotNull
     private String opis;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
+    private String hash;
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 
     public Samochod() {
     }

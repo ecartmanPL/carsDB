@@ -1,6 +1,12 @@
+window.numberOfFiles = 0;
+window.processedFiles = 0;
+
 function myFunction(){
 	var files = document.getElementById("fileUpl").files;
 	hash = makeHash(10);
+	window.numberOfFiles = files.length;
+    $('input[id="hash"]').val(hash);
+	$('input[type="submit"]').prop('disabled', true);
 	console.log('Załadowano ' + files.length + 'plików. Mam hash ' + hash);
 	for (var i = 0; i<files.length; i++) {
 		if (files[i].type.match('image.*')) {
@@ -10,7 +16,6 @@ function myFunction(){
 };
 
 function resize(file, hash) {
-	console.log("w funkcji A" + file);
 	var rdr = new FileReader();
 	var img = new Image();
 	rdr.readAsDataURL(file);
@@ -23,8 +28,8 @@ function resize(file, hash) {
 			console.log('image loaded!' + img);
 			//var ctx = canvas.getContext("2ds");
 			//ctx.drawImage(img, 0, 0);
-			var MAX_WIDTH = 800;
-			var MAX_HEIGHT = 600;
+			var MAX_WIDTH = 1200;
+			var MAX_HEIGHT = 900;
 			var width = img.width;
 			var height = img.height;
 			if (width > height) {
@@ -49,7 +54,7 @@ function resize(file, hash) {
 			tImg.setAttribute("width", canvas.width);
 			tImg.setAttribute("height", canvas.height);
 
-			    var dataToSend = JSON.stringify({id : 123, dataUrl: dataurl, nazwaPliku: file.name, hash: hash});
+			    var dataToSend = JSON.stringify({dataUrl: dataurl, nazwaPliku: file.name, hash: hash});
 			    console.log('dataToSend: '+dataToSend);
 			    $.ajax(
                 {
@@ -59,7 +64,12 @@ function resize(file, hash) {
                 data: dataToSend,
                 success: function(data, textStatus, jqXHR)
                     {
-                    //alert("success");
+                    window.processedFiles++;
+                    console.log("Przetworzylem " + window.processedFiles + " z " + window.numberOfFiles + " plików.");
+                    if (window.processedFiles == window.numberOfFiles) {
+                        console.log("PRZETWORZYEM WSZYSTKIE PLIKI!");
+                        $('input[type="submit"]').prop('disabled', false);
+                        }
                     },
                 error: function(jqXHR, textStatus, errorThrown)
                     {

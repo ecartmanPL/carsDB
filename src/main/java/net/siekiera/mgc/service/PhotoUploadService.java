@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by eric on 14.05.2016.
@@ -107,6 +108,10 @@ public class PhotoUploadService {
 
     public String getHash() {
         return RandomStringUtils.randomAlphabetic(10);
+    }
+
+    public List<Zdjecie> getZdjecieByHash(String hash) {
+        return zdjeciedDao.findByHash(hash);
     }
 
 }

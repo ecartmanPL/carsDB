@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -27,6 +28,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -57,7 +59,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/newcar", method = RequestMethod.GET)
-    public String newCar(Model model) {
+    public String newCar(Model model, Samochod samochod) {
         model.addAttribute("samochod", new Samochod());
         model.addAttribute("allMarka", markaDao.findAll());
         model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
@@ -65,14 +67,22 @@ public class MainController {
     }
 
     @RequestMapping(value = "/newcar", method = RequestMethod.POST)
-    public String newCarSave(@RequestParam("file") List<MultipartFile> files, @ModelAttribute Samochod samochod,
-                             Model model, RedirectAttributes redirectAttributes) {
-        for (MultipartFile singleFile : files) {
-            if (!singleFile.isEmpty()) {
-                Zdjecie zdjecie = photoUploadService.upload(singleFile);
-                samochod.dodajZdjecie(zdjecie);
-            }
+    public String newCarSave(@Valid Samochod samochod, BindingResult bindingResult, Model model,
+                             RedirectAttributes redirectAttributes) {
+//        for (MultipartFile singleFile : files) {
+//            if (!singleFile.isEmpty()) {
+//                Zdjecie zdjecie = photoUploadService.upload(singleFile);
+//                samochod.dodajZdjecie(zdjecie);
+//            }
+//        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("allMarka", markaDao.findAll());
+            model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
+            return "newcar";
         }
+        //jesli walidacja przeszla ok, to skladamy ogloszenie i zapisujemy do bazy
+        List<Zdjecie> listaZdjec = photoUploadService.getZdjecieByHash(samochod.getHash());
+        samochod.setZdjecia(listaZdjec);
         CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
         samochod = samochodService.ustawCenyWalutoweSamochodu(samochod);
         samochodService.zapisz(samochod);
@@ -92,6 +102,8 @@ public class MainController {
         photoUploadService.saveDataUrlAsFile(zdjecie.getDataUrl(), fileNameWithHash);
         zdjecie.setSciezka(fileNameWithHash);
         photoUploadService.zapisz(zdjecie);
+        //pobieranie listy zdjec po hashu:
+        List<Zdjecie> listaZdjec = photoUploadService.getZdjecieByHash("bpbh5YM50s");
         return "JSON processed!";
 
     }

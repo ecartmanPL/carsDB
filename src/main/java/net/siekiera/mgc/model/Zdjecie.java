@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.valuehandling.UnwrapValidatedValue;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Klasa przechowuje informacje o zdjęciu (sciezka)
@@ -14,27 +15,43 @@ public class Zdjecie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     /*
      * sciezka do pliku - to bedziemy wstawiac w htmlu w tagu <img>
      * sciezke robimy w javie
      * sciezka bedzie postaci: DSC04693_2016_08_26_LOSOWYHASH.jpg1
      */
     private String sciezka;
+
     //to przychodzi z JSONa - to oryginalna nazwa pliku zaladowanego przez formularz
     //dobrze byloby dodac do tego jakis hash zeby sie nie powtarzaly
     private String nazwaPliku;
+
     /*    to hash to pilnowania zeby zdjecia byly z jednego ogloszenia
         bedzie dodawany taki sam hash do wszystkich zdjec dodanych do tego samego ogloszenia
         hash bedzie losowany przy przeladowaniu strony i dodawany do formularza
         stamtad bedzie pobierany przez jsona i dokladany do kazdego zdjecia i tresci ogloszenia
         potem zrobimy skladanie tego do kupy*/
     private String hash;
+
     /*
      * data url to plik zapisany w postaci ciagu znakow. zapiszmy go tez do bazy (na wszelki wypadek).
      * zawsze bedzie mozna wylaczyc zapis tych danych, ale raczej niczego to nam nie zmieni (malo bajtow)
      */
     @Type(type="text")
     private String dataUrl;
+
+    /* uploadDate - data załadowania zdjęcia do bazy
+     */
+    private Date uploadDate;
+
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 
     public String getDataUrl() {
         return dataUrl;
@@ -45,7 +62,7 @@ public class Zdjecie {
     }
 
     public Zdjecie() {
-
+        this.uploadDate = new Date();
     }
 
     public String getHash() {
