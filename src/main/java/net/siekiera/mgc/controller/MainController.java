@@ -60,21 +60,18 @@ public class MainController {
 
     @RequestMapping(value = "/newcar", method = RequestMethod.GET)
     public String newCar(Model model, Samochod samochod) {
+        model.addAttribute("tytulFormularza", Const.TYTUL_FORM_DODAWANIE);
         model.addAttribute("samochod", new Samochod());
         model.addAttribute("allMarka", markaDao.findAll());
         model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
+        model.addAttribute("paliwo", Paliwo.values());
         return "newCar";
     }
 
-    @RequestMapping(value = "/newcar", method = RequestMethod.POST)
+    //to wywolujs sie przy dodawaniu nowego samochodu lub edycji
+    @RequestMapping(value = "/savecar", method = RequestMethod.POST)
     public String newCarSave(@Valid Samochod samochod, BindingResult bindingResult, Model model,
                              RedirectAttributes redirectAttributes) {
-//        for (MultipartFile singleFile : files) {
-//            if (!singleFile.isEmpty()) {
-//                Zdjecie zdjecie = photoUploadService.upload(singleFile);
-//                samochod.dodajZdjecie(zdjecie);
-//            }
-//        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("allMarka", markaDao.findAll());
             model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
@@ -108,6 +105,20 @@ public class MainController {
 
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(SamochodWzor samochodWzor, Model model, Pageable pageable, HttpSession session) {
+        //taki obkeit dostaniemy z formularza
+        Specification<Samochod> spec = new SamochodSpec(samochodWzor);
+        if (samochodDao.findAll(spec).size() == 0) {
+            model.addAttribute("errorMessage", "Zapytanie zwróciło 0 wyników!");
+            model.addAttribute("samochody", null);
+        } else {
+            Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageable.getPageNumber(), Const.numberOfCarsPerPage));
+            model.addAttribute("samochody", samochodyPage);
+        }
+        return "listAllCars";
+    }
+
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
     public String listAll(Model model, Pageable pageable, HttpSession session) {
         List<Samochod> samochody = new ArrayList<Samochod>();
@@ -117,7 +128,7 @@ public class MainController {
         samochodSearch.setModel("s");
         samochodSearch.setRokProdukcji(1888);
         session.setAttribute("szukajka", samochodSearch);
-        Specification<Samochod> spec = new SamochodSpec(samochodSearch);
+        //Specification<Samochod> spec = new SamochodSpec(samochodSearch);
         //tu trzeba miec instancje ktora implementuje interfejs Specification
         //potrzebne do wyszukiwarki!
         //samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
@@ -125,6 +136,7 @@ public class MainController {
         //przykład uzycia wyszukiwarki
         //Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
+        model.addAttribute("samochodWzor", new SamochodWzor());
         model.addAttribute("samochody", samochodyPage);
         return "listAllCars";
     }
@@ -146,6 +158,7 @@ public class MainController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editCar(@PathVariable("id") int id, Model model) {
         Samochod samochod = samochodDao.findOne(id);
+        model.addAttribute("tytulFormularza", Const.TYTUL_FORM_EDYCJA);
         model.addAttribute("samochod", samochod);
         model.addAttribute("allMarka", markaDao.findAll());
         model.addAttribute("allWyposazenie", wyposazenieDao.findAll());

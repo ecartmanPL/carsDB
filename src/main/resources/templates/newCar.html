@@ -10,9 +10,9 @@
         <div th:if="${message}">
             <h2 th:text="${message}"/>
         </div>
-        <h1>Dodawanie samochodu</h1>
+        <h1 th:text="${tytulFormularza}"></h1>
         <input type="file" id="fileUpl" multiple="multiple" placeholder="Zdjecia" onchange="myFunction()" accept=".jpg,.jpeg"/>
-        <form action="#" th:action="@{/newcar}" th:object="${samochod}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        <form action="#" th:action="@{/savecar}" th:object="${samochod}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{hash}"/>
 
@@ -64,6 +64,10 @@
                 <label for="cena">Cena</label>
                 <div class="validationErrorMessage" th:if="${#fields.hasErrors('cena')}" th:errors="*{cena}">Error message!</div>
                 <input type="text" class="form-control" placeholder="Cena" id="cena" th:field="*{cena}"/>
+            </div>
+            <div class="checkbox" th:each="singlePaliwo : ${T(net.siekiera.mgc.model.Paliwo).values()}">
+                <label><input type="radio" th:field="*{paliwo}" th:value="${singlePaliwo}"
+                              th:text="${singlePaliwo}"/></label>
             </div>
             <div><input type="submit" class="btn btn-success" value="Zapisz"/> <input type="reset" class="btn btn-danger" value="Reset"/></div>
             <div class="checkbox" th:each="elWyposazenia : ${allWyposazenie}">

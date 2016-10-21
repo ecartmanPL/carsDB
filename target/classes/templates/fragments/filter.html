@@ -1,47 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <div class="col-sm-12">
     <h4>Tu będzie wyszukiwarka:</h4>
     <div class="panel panel-default">
-        <div class="panel-body form-horizontal payment-form">
-            <div class="form-group">
-                <label for="concept" class="col-sm-12 control-label">Pole 1</label>
-                <div class="col-sm-12">
-                    <input type="text" class="form-control" id="concept" name="concept"/>
+        <div class="panel-body form-horizontal search-form">
+            <form action="#" th:action="@{/search}" th:object="${samochodWzor}" method="get" enctype="multipart/form-data"
+                  accept-charset="UTF-8">
+                <div class="form-group">
+                    <label for="cenaMin">Cena min.</label>
+                    <input type="text" class="form-control" placeholder="Cena min" id="cenaMin" th:field="*{cenaMin}"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="description" class="col-sm-12 control-label">Pole 2</label>
-                <div class="col-sm-12">
-                    <input type="text" class="form-control" id="description" name="description"/>
+                <div class="form-group">
+                    <label for="cenaMax">Cena max.</label>
+                    <input type="text" class="form-control" placeholder="Cena max" id="cenaMax" th:field="*{cenaMax}"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="amount" class="col-sm-12 control-label">Pole 3</label>
-                <div class="col-sm-12">
-                    <input type="number" class="form-control" id="amount" name="amount"/>
+                <!--<div class="form-group">-->
+                    <!--<label for="rokProdukcji">Rok produkcji</label>-->
+                    <!--<input type="text" class="form-control" placeholder="Rok produkcji" id="rokProdukcji"-->
+                           <!--th:field="*{rokProdukcji}"/>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info" value="Szukaj"/>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="status" class="col-sm-12 control-label">Pole 4</label>
-                <div class="col-sm-12">
-                    <select class="form-control" id="status" name="status">
-                        <option>Paid</option>
-                        <option>Unpaid</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="date" class="col-sm-12 control-label">Pole 5</label>
-                <div class="col-sm-12">
-                    <input type="date" class="form-control" id="date" name="date"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-12 text-right">
-                    <button type="button" class="btn btn-default preview-add-button">
-                        <span class="glyphicon glyphicon-search"></span> Szukaj
-                    </button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+</html>

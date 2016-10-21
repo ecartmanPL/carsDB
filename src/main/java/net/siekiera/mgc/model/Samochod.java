@@ -49,6 +49,7 @@ public class Samochod {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();
     private String hash;
+    private Paliwo paliwo;
 
     public String getHash() {
         return hash;
@@ -61,19 +62,35 @@ public class Samochod {
     public Samochod() {
     }
 
-    public Samochod(Integer id, Marka marka, String model, Integer rokProdukcji, Integer pojemnoscSkokowa, Integer przebieg, Integer moc, Double cena, Boolean faktura, List<Zdjecie> zdjecia, String opis, List<ElementWyposazenia> listaWyposazenia) {
+    public Samochod(Integer id, Marka marka, String model, String tytul, Integer rokProdukcji, Integer pojemnoscSkokowa,
+                    Integer przebieg, Integer moc, Double cena, Double cenaUsd, Double cenaEur, Boolean faktura,
+                    List<Zdjecie> zdjecia, String opis, List<ElementWyposazenia> listaWyposazenia, String hash,
+                    Paliwo paliwo) {
         this.id = id;
         this.marka = marka;
         this.model = model;
+        this.tytul = tytul;
         this.rokProdukcji = rokProdukcji;
         this.pojemnoscSkokowa = pojemnoscSkokowa;
         this.przebieg = przebieg;
         this.moc = moc;
         this.cena = cena;
+        this.cenaUsd = cenaUsd;
+        this.cenaEur = cenaEur;
         this.faktura = faktura;
         this.zdjecia = zdjecia;
         this.opis = opis;
         this.listaWyposazenia = listaWyposazenia;
+        this.hash = hash;
+        this.paliwo = paliwo;
+    }
+
+    public Paliwo getPaliwo() {
+        return paliwo;
+    }
+
+    public void setPaliwo(Paliwo paliwo) {
+        this.paliwo = paliwo;
     }
 
     public List<ElementWyposazenia> getListaWyposazenia() {

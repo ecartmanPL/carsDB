@@ -10,6 +10,9 @@
     <div th:if="${message}">
         <div class="alert alert-success" role="alert" th:text="${message}"></div>
     </div>
+    <div th:if="${errorMessage}">
+        <div class="alert alert-info" role="alert" th:text="${errorMessage}"></div>
+    </div>
     <div class="col-md-3">
         <div th:replace="fragments/filter"></div>
     </div>
