@@ -65,7 +65,7 @@
                 <div class="validationErrorMessage" th:if="${#fields.hasErrors('cena')}" th:errors="*{cena}">Error message!</div>
                 <input type="text" class="form-control" placeholder="Cena" id="cena" th:field="*{cena}"/>
             </div>
-            <div class="checkbox" th:each="singlePaliwo : ${T(net.siekiera.mgc.model.Paliwo).values()}">
+            <div class="radio" th:each="singlePaliwo : ${T(net.siekiera.mgc.model.Paliwo).values()}">
                 <label><input type="radio" th:field="*{paliwo}" th:value="${singlePaliwo}"
                               th:text="${singlePaliwo}"/></label>
             </div>

@@ -112,9 +112,11 @@ public class MainController {
         if (samochodDao.findAll(spec).size() == 0) {
             model.addAttribute("errorMessage", "Zapytanie zwróciło 0 wyników!");
             model.addAttribute("samochody", null);
+            model.addAttribute("allMarka", markaDao.findAll());
         } else {
             Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageable.getPageNumber(), Const.numberOfCarsPerPage));
             model.addAttribute("samochody", samochodyPage);
+            model.addAttribute("allMarka", markaDao.findAll());
         }
         return "listAllCars";
     }
@@ -138,6 +140,7 @@ public class MainController {
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
         model.addAttribute("samochodWzor", new SamochodWzor());
         model.addAttribute("samochody", samochodyPage);
+        model.addAttribute("allMarka", markaDao.findAll());
         return "listAllCars";
     }
 

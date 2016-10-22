@@ -1,5 +1,7 @@
 package net.siekiera.mgc.dao;
 
+import net.siekiera.mgc.model.Marka;
+import net.siekiera.mgc.model.Paliwo;
 import net.siekiera.mgc.model.Samochod;
 import net.siekiera.mgc.model.SamochodWzor;
 import org.apache.commons.lang3.StringUtils;
@@ -60,9 +62,27 @@ public class SamochodSpec implements Specification<Samochod> {
         if (samochod.getCenaMax() != null) {
             predicateList.add(criteriaBuilder.lessThan(root.get("cena"), samochod.getCenaMax()));
         }
-//        if (samochod.getRokProdukcji() != null) {
-//            predicateList.add(criteriaBuilder.equal(root.<Samochod>get("rokProdukcji"), samochod.getRokProdukcji()));
-//        }
+
+        if (samochod.getPaliwoList().size()>0) {
+            List<Predicate> fuelPredicateList = new ArrayList<Predicate>();
+            Predicate fuelPredicate;
+            for (Paliwo paliwo : samochod.getPaliwoList()) {
+                fuelPredicateList.add(criteriaBuilder.equal(root.get("paliwo"), paliwo));
+            }
+            fuelPredicate = criteriaBuilder.or(fuelPredicateList.toArray(new Predicate[0]));
+            predicateList.add(fuelPredicate);
+        }
+
+        if (samochod.getMarkaList().size()>0) {
+            List<Predicate> markaPredicateList = new ArrayList<Predicate>();
+            Predicate markaPredicate;
+            for (Marka marka : samochod.getMarkaList()) {
+                markaPredicateList.add(criteriaBuilder.equal(root.get("marka"), marka));
+            }
+            markaPredicate = criteriaBuilder.or(markaPredicateList.toArray(new Predicate[0]));
+            predicateList.add(markaPredicate);
+        }
+
         return andTogether(predicateList, criteriaBuilder);
     }
 
