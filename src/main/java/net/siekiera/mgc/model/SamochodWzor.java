@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * Created by Eric on 21.10.2016.
  */
-public class SamochodWzor extends Samochod {
+public class SamochodWzor extends SamochodBase {
     private Double cenaMin;
     private Double cenaMax;
     private Set<Marka> markaList;

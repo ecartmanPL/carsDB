@@ -1,5 +1,6 @@
 package net.siekiera.mgc.service;
 
+import net.siekiera.mgc.dao.SamochodBaseDao;
 import net.siekiera.mgc.model.Samochod;
 import net.siekiera.mgc.dao.SamochodDao;
 import org.slf4j.Logger;
@@ -16,7 +17,7 @@ public class SamochodService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private SamochodDao samochodDao;
+    private SamochodBaseDao samochodDao;
     @Autowired
     private CurrencyService currencyService;
 

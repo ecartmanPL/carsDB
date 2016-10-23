@@ -41,19 +41,11 @@ public class SamochodSpec implements Specification<Samochod> {
 //        }
 //    }
 
-    public Predicate sprawdzRok(Root<Samochod> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        if (samochod.getRokProdukcji() != null) {
-            return criteriaBuilder.equal(root.<Samochod>get("rokProdukcji"), samochod.getRokProdukcji());
-        } else {
-            return null;
-        }
-    }
-
     @Override
     public Predicate toPredicate(Root<Samochod> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicateList = new ArrayList<Predicate>();
-        CriteriaQuery<Samochod> query = criteriaBuilder.createQuery(Samochod.class);
-        Root<Samochod> samochodRoot = query.from(Samochod.class);
+        //CriteriaQuery<Samochod> query = criteriaBuilder.createQuery(Samochod.class);
+        //Root<Samochod> samochodRoot = query.from(Samochod.class);
 
         if (samochod.getCenaMin() != null) {
             predicateList.add(criteriaBuilder.greaterThan(root.get("cena"), samochod.getCenaMin()));

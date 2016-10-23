@@ -8,7 +8,7 @@ public class Const {
     //pamietaj o znaku "/" na koncu sciezki!
     public static final String uploadPath = "/Users/eric/Desktop/upl/";
     //ilosc samochodow wyswietlana jednej stronie
-    public static final Integer numberOfCarsPerPage = 8;
+    public static final Integer numberOfCarsPerPage = 4;
     //obsluga bledow walidacji formularzy
     public static final String priceNull = "Cena musi być większa od zera!";
     //tytuly formularzy

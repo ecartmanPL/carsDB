@@ -49,6 +49,10 @@ public class MainController {
     @Autowired
     SamochodDao samochodDao;
     @Autowired
+    SamochodDostawczyDao samochodDostawczyDao;
+    @Autowired
+    SamochodBaseDao samochodBaseDao;
+    @Autowired
     SamochodService samochodService;
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -65,7 +69,7 @@ public class MainController {
         model.addAttribute("allMarka", markaDao.findAll());
         model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
         model.addAttribute("paliwo", Paliwo.values());
-        return "newCar";
+        return "addEditForm";
     }
 
     //to wywolujs sie przy dodawaniu nowego samochodu lub edycji
@@ -75,7 +79,7 @@ public class MainController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("allMarka", markaDao.findAll());
             model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
-            return "newcar";
+            return "addEditForm";
         }
         //jesli walidacja przeszla ok, to skladamy ogloszenie i zapisujemy do bazy
         List<Zdjecie> listaZdjec = photoUploadService.getZdjecieByHash(samochod.getHash());
@@ -116,7 +120,7 @@ public class MainController {
         } else {
             Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageable.getPageNumber(), Const.numberOfCarsPerPage));
             model.addAttribute("samochody", samochodyPage);
-            model.addAttribute("allMarka", markaDao.findAll());
+            model.addAttribute("allMarka", markaDao.findDistinctByMarka());
         }
         return "listAllCars";
     }
@@ -124,7 +128,7 @@ public class MainController {
     @RequestMapping(value = "/listall", method = RequestMethod.GET)
     public String listAll(Model model, Pageable pageable, HttpSession session) {
         List<Samochod> samochody = new ArrayList<Samochod>();
-        CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
+        //CenyWalut cenyWalut = currencyService.getCenyWalutFromLocalDB();
         Integer pageNumber = pageable.getPageNumber();
         Samochod samochodSearch = new Samochod();
         samochodSearch.setModel("s");
@@ -140,7 +144,16 @@ public class MainController {
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
         model.addAttribute("samochodWzor", new SamochodWzor());
         model.addAttribute("samochody", samochodyPage);
-        model.addAttribute("allMarka", markaDao.findAll());
+        model.addAttribute("allMarka", markaDao.findDistinctByMarka());
+        return "listAllCars";
+    }
+
+    @RequestMapping(value = "/dostawcze", method = RequestMethod.GET)
+    public String listDostawcze(Model model, Pageable pageable, HttpSession session) {
+        Page<SamochodBase> samochodyPage = samochodBaseDao.findAll(new PageRequest(pageable.getPageNumber(), Const.numberOfCarsPerPage));
+        model.addAttribute("samochodWzor", new SamochodWzor());
+        model.addAttribute("samochody", samochodyPage);
+        model.addAttribute("allMarka", markaDao.findDistinctByMarka());
         return "listAllCars";
     }
 
@@ -165,7 +178,7 @@ public class MainController {
         model.addAttribute("samochod", samochod);
         model.addAttribute("allMarka", markaDao.findAll());
         model.addAttribute("allWyposazenie", wyposazenieDao.findAll());
-        return "newCar";
+        return "addEditForm";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
