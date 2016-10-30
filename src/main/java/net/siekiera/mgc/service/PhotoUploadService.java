@@ -82,7 +82,7 @@ public class PhotoUploadService {
             outputFile = new File(Const.uploadPath + path);
             ImageIO.write(bi, "jpeg", outputFile);
         } catch (Exception e) {
-            log.error("Błąd w metodzie saveDataUrlAsFile" + e.getMessage());
+            log.error("Błąd w metodzie saveDataUrlAsFile path=" + Const.uploadPath + path + " error=" + e.getMessage());
         } finally {
             bi.flush();
             return outputFile.getName();
@@ -96,13 +96,13 @@ public class PhotoUploadService {
 
     public String getFullFileNameFormFileName(String fileName) {
         String[] split = StringUtils.split(fileName, ".");
-        String fullFileName=split[0];
+        String fullFileName = split[0];
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd");
         String date = sdf.format(new Date());
         //dodajemy datę do nazwy pliku
-        fullFileName = fullFileName.concat("_"+date);
+        fullFileName = fullFileName.concat("_" + date);
         //dodajemy hash do nazwy pliku
-        fullFileName = fullFileName.concat("_"+getHash()+".jpg");
+        fullFileName = fullFileName.concat("_" + getHash() + ".jpg");
         return fullFileName;
     }
 

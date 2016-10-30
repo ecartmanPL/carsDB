@@ -1,6 +1,7 @@
 package net.siekiera.mgc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Przechowuje kurs sprzedazy eur, usd i dane tabeli.
@@ -15,6 +16,7 @@ public class CenyWalut {
     private String dataNotowania;
     private Double eur;
     private Double usd;
+    private Date data = new Date();
 
     public CenyWalut() {
     }
@@ -65,6 +67,14 @@ public class CenyWalut {
 
     public void setUsd(Double usd) {
         this.usd = usd;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
 

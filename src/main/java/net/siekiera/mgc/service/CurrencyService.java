@@ -104,13 +104,14 @@ public class CurrencyService {
         return cenyWalut;
     }
 
-    @PostConstruct
+    @Scheduled(cron = "0 15 8 * * MON-FRI")
     public void updateCenyWalut() {
         CenyWalut cenyWalut = getCenyWalutFromNBP();
         if (cenyWalut.getEur() != null && cenyWalut.getUsd() != null && cenyWalut.getDataNotowania() != null
                 && cenyWalut.getNumerTabeli() != null) {
             cenyWalutDao.save(cenyWalut);
             updateAllCarsPrices();
+            log.info("[CRON] Zaktualizowałem ceny walut!");
         } else {
             log.error("Metoda getCenyWalutFromNBP zwrocila null! Nie zapisuje do bazy!");
         }

@@ -6,7 +6,10 @@ package net.siekiera.mgc.configuration;
 public class Const {
     public static final String test = "to jest test";
     //pamietaj o znaku "/" na koncu sciezki!
-    public static final String uploadPath = "/Users/eric/Desktop/upl/";
+    //fizyczny folder do ktorego zapisujemy pliki
+    public static final String uploadPath = "./upload/";
+    //prefix do wyswietlania zdjec (zdefiniowany w StaticResourceConfiguration)
+    public static final String PHOTO_PREFIX = "/photos/";
     //ilosc samochodow wyswietlana jednej stronie
     public static final Integer numberOfCarsPerPage = 4;
     //obsluga bledow walidacji formularzy

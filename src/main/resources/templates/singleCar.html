@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <h3 th:text="${samochod.tytul}">Samochod opis</h3>
             <h4>Cena: <span th:text="${samochod.cena}">CenaPln</span> zł<br></br>
                 <small>[ <span th:text="${#numbers.formatDecimal(samochod.cenaEur, 1, 2)}">CenaEur</span>
@@ -60,15 +60,8 @@
                 [zdefiniujemy to w jakims szablonie?]
             </p>
         </div>
-        <div class="col-md-6">
-            <img src="http://placehold.it/800x533" class="img-responsive"></img>
-            <div class="row">
-                <div th:each="zdjecie: ${samochod.zdjecia}" class="col-md-4">
-                    <a href="#" class="thumbnail">
-                        <img th:src="${'/photos/' + zdjecie.sciezka}" src="http://placehold.it/800x533" class="img-responsive"></img>
-                    </a>
-                </div>
-            </div>
+        <div class="col-md-8">
+            <div th:replace="fragments/slideshow"></div>
         </div>
     </div>
 </div>

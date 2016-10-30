@@ -116,12 +116,13 @@ public class MainController {
         if (samochodDao.findAll(spec).size() == 0) {
             model.addAttribute("errorMessage", "Zapytanie zwróciło 0 wyników!");
             model.addAttribute("samochody", null);
-            model.addAttribute("allMarka", markaDao.findAll());
+            model.addAttribute("allMarka", markaDao.findDistinctByMarka());
         } else {
             Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageable.getPageNumber(), Const.numberOfCarsPerPage));
             model.addAttribute("samochody", samochodyPage);
             model.addAttribute("allMarka", markaDao.findDistinctByMarka());
         }
+        model.addAttribute("prefix", Const.PHOTO_PREFIX);
         return "listAllCars";
     }
 
@@ -142,6 +143,7 @@ public class MainController {
         //przykład uzycia wyszukiwarki
         //Page<Samochod> samochodyPage = samochodDao.findAll(spec, new PageRequest(pageNumber, Const.numberOfCarsPerPage));
         log.info("Ilosc stron: " + samochodyPage.getTotalPages() + " Strona: " + samochodyPage.getNumber());
+        model.addAttribute("prefix", Const.PHOTO_PREFIX);
         model.addAttribute("samochodWzor", new SamochodWzor());
         model.addAttribute("samochody", samochodyPage);
         model.addAttribute("allMarka", markaDao.findDistinctByMarka());
@@ -162,6 +164,7 @@ public class MainController {
         Samochod samochod = samochodDao.findOne(id);
         String opisHtml = new String();
         model.addAttribute("samochod", samochod);
+        model.addAttribute("prefix", Const.PHOTO_PREFIX);
         //model.addAttribute("uploadPath", Const.uploadPath);
         //Dodajemy HTMLowe znaki nowych linii do opisu.
         if (samochod.getOpis() != null && !samochod.getOpis().isEmpty()) {

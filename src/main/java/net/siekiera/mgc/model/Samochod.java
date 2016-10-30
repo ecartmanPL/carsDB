@@ -14,7 +14,6 @@ import java.util.List;
  * Klasa przechowuje dane o ogłoszeniu sprzedaży samochodu
  */
 @Entity
-@Table(name = "samochody")
 public class Samochod extends SamochodBase {
 
 }
