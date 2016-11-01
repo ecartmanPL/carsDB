@@ -111,7 +111,7 @@ public class CurrencyService {
                 && cenyWalut.getNumerTabeli() != null) {
             cenyWalutDao.save(cenyWalut);
             updateAllCarsPrices();
-            log.info("[CRON] Zaktualizowałem ceny walut!");
+            log.info("Zaktualizowałem ceny walut!");
         } else {
             log.error("Metoda getCenyWalutFromNBP zwrocila null! Nie zapisuje do bazy!");
         }

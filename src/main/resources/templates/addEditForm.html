@@ -11,70 +11,94 @@
             <h2 th:text="${message}"/>
         </div>
         <h1 th:text="${tytulFormularza}"></h1>
-        <input type="file" id="fileUpl" multiple="multiple" placeholder="Zdjecia" onchange="myFunction()" accept=".jpg,.jpeg"/>
-        <form action="#" th:action="@{/savecar}" th:object="${samochod}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        <div class="form-group">
+            <label for="tytul">Zdjęcia</label>
+            <input type="file" id="fileUpl" multiple="multiple" placeholder="Zdjecia" onchange="myFunction()"
+                   accept=".jpg,.jpeg"/>
+        </div>
+        <form action="#" th:action="@{/savecar}" th:object="${samochod}" method="post" enctype="multipart/form-data"
+              accept-charset="UTF-8">
             <input type="hidden" th:field="*{id}"/>
             <input type="hidden" th:field="*{hash}"/>
 
             <div class="form-group">
                 <label for="tytul">Tytuł ogłoszenia</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('tytul')}" th:errors="*{tytul}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('tytul')}" th:errors="*{tytul}">Error
+                    message!
+                </div>
                 <input type="text" class="form-control" placeholder="Tytuł ogłoszenia" id="tytul" th:field="*{tytul}"/>
             </div>
             <div class="form-group">
                 <label for="opis">Opis</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}">Error
+                    message!
+                </div>
                 <textarea th:field="*{opis}" class="form-control" rows="5" id="opis"></textarea>
             </div>
             <div class="form-group">
                 <label for="marka">Marka</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('marka')}" th:errors="*{marka}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('marka')}" th:errors="*{marka}">Error
+                    message!
+                </div>
                 <select th:field="*{marka}" class="form-control" id="marka">
                     <option th:each="marka : ${allMarka}" th:value="${marka.id}" th:text="${marka.nazwa}">Marka</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="model">Model</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Error
+                    message!
+                </div>
                 <input type="text" class="form-control" placeholder="Model" id="model" th:field="*{model}"/>
             </div>
             <div class="form-group">
                 <label for="rok">Rok produkcji</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('rokProdukcji')}" th:errors="*{rokProdukcji}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('rokProdukcji')}"
+                     th:errors="*{rokProdukcji}">Error message!
+                </div>
                 <input type="text" class="form-control" placeholder="Rok produkcji" id="rok"
                        th:field="*{rokProdukcji}"/>
             </div>
             <div class="form-group">
                 <label for="pojemnosc">Pojemność skokowa</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('pojemnoscSkokowa')}" th:errors="*{pojemnoscSkokowa}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('pojemnoscSkokowa')}"
+                     th:errors="*{pojemnoscSkokowa}">Error message!
+                </div>
                 <input type="text" class="form-control" placeholder="Pojemnosc skokowa" id="pojemnosc"
                        th:field="*{pojemnoscSkokowa}"/>
             </div>
             <div class="form-group">
                 <label for="przebieg">Przebieg</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('przebieg')}" th:errors="*{przebieg}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('przebieg')}" th:errors="*{przebieg}">
+                    Error message!
+                </div>
                 <input type="text" class="form-control" placeholder="Przebieg" id="przebieg" th:field="*{przebieg}"/>
             </div>
             <div class="form-group">
                 <label for="moc">Moc</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('moc')}" th:errors="*{moc}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('moc')}" th:errors="*{moc}">Error
+                    message!
+                </div>
                 <input type="text" class="form-control" placeholder="Moc" id="moc" th:field="*{moc}"/>
             </div>
             <div class="form-group">
                 <label for="cena">Cena</label>
-                <div class="validationErrorMessage" th:if="${#fields.hasErrors('cena')}" th:errors="*{cena}">Error message!</div>
+                <div class="validationErrorMessage" th:if="${#fields.hasErrors('cena')}" th:errors="*{cena}">Error
+                    message!
+                </div>
                 <input type="text" class="form-control" placeholder="Cena" id="cena" th:field="*{cena}"/>
             </div>
             <div class="radio" th:each="singlePaliwo : ${T(net.siekiera.mgc.model.Paliwo).values()}">
                 <label><input type="radio" th:field="*{paliwo}" th:value="${singlePaliwo}"
                               th:text="${singlePaliwo}"/></label>
             </div>
-            <div><input type="submit" class="btn btn-success" value="Zapisz"/> <input type="reset" class="btn btn-danger" value="Reset"/></div>
+            <div><input type="submit" class="btn btn-success" value="Zapisz"/> <input type="reset"
+                                                                                      class="btn btn-danger"
+                                                                                      value="Reset"/></div>
             <div class="checkbox" th:each="elWyposazenia : ${allWyposazenie}">
                 <label><input type="checkbox" th:field="*{listaWyposazenia}" th:value="${elWyposazenia.id}"
                               th:text="${elWyposazenia.nazwa}"/></label>
             </div>
-
 
 
         </form>

@@ -3,7 +3,12 @@ window.processedFiles = 0;
 
 function myFunction(){
 	var files = document.getElementById("fileUpl").files;
-	hash = makeHash(10);
+	if ($('input[id="hash"]').val() != "") {
+	    hash = $('input[id="hash"]').val();
+	}
+	else {
+	    	hash = makeHash(10);
+	}
 	window.numberOfFiles = files.length;
     $('input[id="hash"]').val(hash);
 	$('input[type="submit"]').prop('disabled', true);
@@ -58,7 +63,7 @@ function resize(file, hash) {
 			    console.log('dataToSend: '+dataToSend);
 			    $.ajax(
                 {
-                url: "photoUploadJson",
+                url: "/photoUploadJson",
                 type: "POST",
                 contentType: "application/json",
                 data: dataToSend,

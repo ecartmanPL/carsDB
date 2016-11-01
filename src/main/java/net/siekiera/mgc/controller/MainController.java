@@ -62,6 +62,14 @@ public class MainController {
         return "homePage";
     }
 
+    @RequestMapping("/czytajWaluty")
+    public String czytajWaluty(RedirectAttributes redirectAttributes) {
+        currencyService.updateCenyWalut();
+        redirectAttributes.addFlashAttribute("message",
+                "Pobralem ceny walut.");
+        return "redirect:/listall";
+    }
+
     @RequestMapping(value = "/newcar", method = RequestMethod.GET)
     public String newCar(Model model, Samochod samochod) {
         model.addAttribute("tytulFormularza", Const.TYTUL_FORM_DODAWANIE);

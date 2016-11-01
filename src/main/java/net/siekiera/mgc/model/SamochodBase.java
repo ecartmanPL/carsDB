@@ -41,7 +41,8 @@ public abstract class SamochodBase {
     private Boolean faktura;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Zdjecie> zdjecia = new ArrayList<Zdjecie>();
-    @NotNull
+    @Lob
+    @Column(name="opis", length=512)
     private String opis;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<ElementWyposazenia> listaWyposazenia = new ArrayList<ElementWyposazenia>();

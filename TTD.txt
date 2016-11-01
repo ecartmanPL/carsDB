@@ -2,3 +2,12 @@ DONE 1. Wyszukiwarka - zrobić prostą działającą wyszukiwarkę (producent, c
 DONE 2. Zrobic prezentacje zdjec w liscie ofert i w ogloszeniu. Niech na liscie wyswietla sie to z najnizszym id / pierwsze
 3. Zrobić statyczn stronę "homepage"
 4. Zrobić panel administracyjny i przeniesc do niego funkcjonalności dodawanie/edycja/usuwanie.
+
+sprzedane auta nbei wyswietlac
+wyposazenie z gratki
+teksty
+rezerwacja na listingu
+ilosc likow na facebooku prezentowana na stronie glownej + link do facebooka
+GRATKA.PL
+- rok produkcji jako lista rozwijalna z odwrotnym sortowaniem od aktualnego roku (2016, 2015, 2014 etc)
+-
