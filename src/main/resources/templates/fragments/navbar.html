@@ -14,6 +14,10 @@
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/listall' ? 'active':''}"><a href="/listall">Samochody osobowe</a></li>
                 <li th:classappend="${#httpServletRequest.getRequestURI() == '/newcar' ? 'active':''}"><a href="/newcar">Dodaj osobowy</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="#"></a></li>
+            </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>

@@ -57,9 +57,9 @@ public class MainController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping("/")
-    public String homePage() {
-        return "homePage";
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "login";
     }
 
     @RequestMapping("/czytajWaluty")
