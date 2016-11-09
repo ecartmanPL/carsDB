@@ -18,8 +18,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().ignoringAntMatchers("/photoUploadJson")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/", "/listall", "/css", "/js", "/cars/**").permitAll()
+                .antMatchers("/", "/listall/**", "/css", "/js", "/cars/**", "/photos/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
