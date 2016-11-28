@@ -1,18 +1,28 @@
 body {
     padding-top: 70px;
-  }
-  .ogloszenieNaLiscie, .tloWyszukiwarki {
-      margin-top: 10px;
-      background-color: #eee;
-      border-radius: 10px;
-      padding: 5px;
-  }
-  .ogloszenieNaLiscie > div > img {
+}
+.ogloszenieNaLiscie, .tloWyszukiwarki {
+    margin-top: 10px;
+    background-color: #eee;
+    border-radius: 10px;
+    padding: 5px;
+}
+.ogloszenieNaLiscie > div > img {
     margin-top: 20px;
-  }
-  .btn-group {
+}
+.btn-group {
     display: inline-block;
-    }
-  .right {
+}
+.right {
     text-align: right;
-    }
+}
+.grid {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.grid-element {
+  display: inline-block;
+  padding: 5px;
+  margin: 0px;
+}
